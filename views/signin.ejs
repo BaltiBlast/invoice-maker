@@ -1,0 +1,35 @@
+<%- include('partials/head.ejs') %>
+
+<section class="vert-center full-height-prct">
+  <div>
+    <h1 class="title">Sign In</h1>
+
+    <!-- SIGNIN FORM -->
+    <form action="/signin" method="POST">
+      <!-- EMAIL -->
+      <div class="field">
+        <label class="label">Email</label>
+        <div class="control">
+          <input class="input is-large" type="email" name="email" required />
+        </div>
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="field">
+        <label class="label">Password</label>
+        <div class="control">
+          <input class="input is-large" type="password" name="password" required />
+        </div>
+      </div>
+
+      <!-- SUBMIT BUTTON -->
+      <div class="field">
+        <div class="control">
+          <button class="button is-primary" type="submit">Sign In</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<%- include('partials/footer.ejs') %>
