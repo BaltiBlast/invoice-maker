@@ -11,3 +11,22 @@
   flex-direction: column;
   justify-content: center;
 }
+
+.navbar {
+  --bulma-navbar-item-img-max-height: 3.7rem;
+}
+
+.navbar__logo {
+  width: 100%;
+  height: auto;
+}
+
+.txt-align-center {
+  text-align: center;
+}
+
+.not-fount__img {
+  width: 30%;
+  margin-bottom: 50px;
+  border-radius: 50%;
+}

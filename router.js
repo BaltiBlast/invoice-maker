@@ -18,6 +18,10 @@ const { getInvoice, postInvoice } = invoiceControllers;
 const contactsController = require("./controllers/contacts/contactsController");
 const { getContacts, postContacts } = contactsController;
 
+// -- general
+const generalControllers = require("./controllers/general/generalControllers");
+const { get404 } = generalControllers;
+
 // AUTH ROUTES
 router.get("/signin", getSignin);
 router.post("/signin", postSignin);
@@ -34,5 +38,8 @@ router.post("/invoice", postInvoice);
 // CONTACTS ROUTES
 router.get("/contacts", getContacts);
 router.post("/contacts", postContacts);
+
+// 404
+router.use(get404);
 
 module.exports = router;

@@ -8,4 +8,31 @@
     <title>La raterie</title>
   </head>
   <body>
+    <% if (showNavbar) { %>
+    <header>
+      <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+        <section class="container">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+              <img src="/image/raterie-logo.svg" class="navbar__logo" alt="La Raterie Logo" />
+            </a>
+          </div>
+
+          <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item" href="/invoice">Facture</a>
+              <a class="navbar-item" href="/contacts">Contacts</a>
+            </div>
+          </div>
+
+          <div class="navbar-end">
+            <a class="navbar-item" href="/user"> <strong>Profil</strong> </a>
+            <div class="navbar-item">
+              <a class="button is-dark" href="/signout"> <strong>Déconnexion</strong> </a>
+            </div>
+          </div>
+        </section>
+      </nav>
+    </header>
+    <% } %>
     <main class="container full-height-vh">
