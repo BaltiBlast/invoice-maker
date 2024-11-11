@@ -15,12 +15,16 @@ const invoiceControllers = require("./controllers/invoices/invoiceControllers");
 const { getInvoice, postInvoice } = invoiceControllers;
 
 // -- contacts
-const contactsController = require("./controllers/contacts/contactsController");
-const { getContacts, postContacts } = contactsController;
+const clientsController = require("./controllers/clients/clientsController");
+const { getClients, postClients } = clientsController;
 
 // -- general
 const generalControllers = require("./controllers/general/generalControllers");
 const { get404 } = generalControllers;
+
+// -- services
+const servicesControllers = require("./controllers/services/servicesControllers");
+const { getServices } = servicesControllers;
 
 // AUTH ROUTES
 router.get("/signin", getSignin);
@@ -36,8 +40,12 @@ router.get("/invoice", getInvoice);
 router.post("/invoice", postInvoice);
 
 // CONTACTS ROUTES
-router.get("/contacts", getContacts);
-router.post("/contacts", postContacts);
+router.get("/clients", getClients);
+router.post("/clients", postClients);
+
+// CONTACTS ROUTES
+router.get("/services", getServices);
+// router.post("/contacts", postContacts);
 
 // 404
 router.use(get404);

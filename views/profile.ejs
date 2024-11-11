@@ -1,5 +1,71 @@
 <%- include('partials/head.ejs') %>
 
-<section>User profil</section>
+<section>
+  <form class="mar-bot" action="contacts" method="POST">
+    <!-- IDENTITE -->
+    <div class="control columns is-3">
+      <!-- PRENOM -->
+      <div class="column field">
+        <label class="label">Prénom</label>
+        <input class="input is-large" value="Marie" type="text" required />
+      </div>
+
+      <!-- NOM DE FAMILLE -->
+      <div class="column field">
+        <label class="label">Nom de famille</label>
+        <input class="input is-large" value="Henry" required />
+      </div>
+
+      <!-- EEMAIL -->
+      <div class="column field">
+        <label class="label">Email</label>
+        <input class="input is-large" value="mariehenry1b@gmail.com" required />
+      </div>
+    </div>
+
+    <!-- ADRESSE -->
+    <div class="control columns is-3">
+      <!-- RUE -->
+      <div class="column field">
+        <label class="label">Rue</label>
+        <input class="input is-large" value="5 Rue des jardins" type="text" required />
+      </div>
+
+      <!-- VILLE -->
+      <div class="column field">
+        <label class="label">Ville</label>
+        <input class="input is-large" value="Mars la tour" required />
+      </div>
+
+      <!-- CODE POSTAL -->
+      <div class="column field">
+        <label class="label">Code postal</label>
+        <input class="input is-large" value="54800" required />
+      </div>
+    </div>
+
+    <!-- ADRESSE -->
+    <div class="control columns is-3">
+      <!-- RUE -->
+      <div class="column field">
+        <label class="label">Forme juridique</label>
+        <input class="input is-large" value="Entrepreneur individuel" type="text" required />
+      </div>
+
+      <!-- SIRET -->
+      <div class="column field">
+        <label class="label">SIRET</label>
+        <input class="input is-large" value="889404760" required />
+      </div>
+    </div>
+
+    <!-- BOUTON SUBMIT -->
+    <div class="field">
+      <div class="control">
+        <button class="button is-primary" type="submit">Modifier</button>
+      </div>
+    </div>
+  </form>
+</section>
 
 <%- include('partials/footer.ejs') %>

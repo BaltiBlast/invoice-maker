@@ -1,0 +1,78 @@
+<%- include('partials/head.ejs') %>
+
+<section>
+  <form class="mar-bot" action="contacts" method="POST">
+    <!-- RAISON SOCIALE (nom ou entreprise) -->
+    <div class="field">
+      <div class="control columns is-3">
+        <!-- RAISON SOCIALE -->
+        <div class="column field">
+          <label class="label">Entreprise OU nom de famille</label>
+          <input class="input is-large" type="text" placeholder="Les gros féssiers / Gisèle" required />
+        </div>
+
+        <!--  -->
+        <div class="column field">
+          <label class="label">Email</label>
+          <input class="input is-large" placeholder="Mouloche@gmail.com" required />
+        </div>
+      </div>
+
+      <div class="control"></div>
+    </div>
+
+    <!-- ADRESSE -->
+    <div class="field">
+      <div class="control columns is-3">
+        <!-- NOM RUE -->
+        <div class="column field">
+          <label class="label">Nom de rue </label>
+          <input class="input is-large" placeholder="95 Boulevard Saint Symphorien" required />
+        </div>
+
+        <!-- VILLE -->
+        <div class="column field">
+          <label class="label">Ville</label>
+          <input class="input is-large" placeholder="Longeville les Metz" required />
+        </div>
+
+        <!-- CODE POSTAL -->
+        <div class="column field">
+          <label class="label">Code postal</label>
+          <input class="input is-large" placeholder="57050" required />
+        </div>
+      </div>
+    </div>
+
+    <!-- BOUTON SUBMIT -->
+    <div class="field">
+      <div class="control">
+        <button class="button is-primary" type="submit">Ajouter contact</button>
+      </div>
+    </div>
+  </form>
+
+  <div>
+    <h2 class="title is-4">Liste des contacts</h2>
+    <% if (contacts) { %>
+    <form action="/contacts-delete" method="post">
+      <% contacts.forEach(function(contact) { %>
+      <div class="box is-flex is-justify-content-space-between">
+        <div>
+          <p><strong>Entreprise/Nom:</strong> <%= contact.company_name %></p>
+          <p><strong>Adresse:</strong> <%= contact.address %></p>
+          <p><strong>Mail:</strong> <%= contact.email %></p>
+        </div>
+        <!-- ADD INPUT WITH RECORD ID FOR DELETING HERE -->
+        <div>
+          <button class="button is-primary" type="submit">Modifier</button>
+          <button class="button is-danger" type="submit">X</button>
+        </div>
+      </div>
+      <% }); %>
+    </form>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer.ejs') %>

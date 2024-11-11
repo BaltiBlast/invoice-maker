@@ -17,8 +17,12 @@
 }
 
 .navbar__logo {
-  width: 100%;
+  width: 90%;
   height: auto;
+}
+
+.mar-bot {
+  margin-bottom: 50px;
 }
 
 .txt-align-center {

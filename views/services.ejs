@@ -1,0 +1,53 @@
+<%- include('partials/head.ejs') %>
+
+<section>
+  <form class="mar-bot" action="contacts" method="POST">
+    <div class="control columns is-3">
+      <!-- PRESTATION -->
+      <div class="column field">
+        <label class="label">Préstation</label>
+        <input
+          class="input is-large"
+          type="text"
+          placeholder="Programme personnalisé, cours collectifs, etc..."
+          required
+        />
+      </div>
+
+      <!-- PRIX -->
+      <div class="column field">
+        <label class="label">Prix</label>
+        <input class="input is-large" placeholder="25" required />
+      </div>
+    </div>
+
+    <!-- BOUTON SUBMIT -->
+    <div class="field">
+      <div class="control">
+        <button class="button is-primary" type="submit">Ajouter préstation</button>
+      </div>
+    </div>
+  </form>
+
+  <div>
+    <% if (services) { %>
+    <form action="/contacts-delete" method="post">
+      <% services.forEach(function(service) { %>
+      <div class="box is-flex is-justify-content-space-between">
+        <div>
+          <p><strong>Préstation:</strong> <%= service.service_name %></p>
+          <p><strong>Prix:</strong> <%= service.service_price %>€</p>
+        </div>
+        <!-- ADD INPUT WITH RECORD ID FOR DELETING HERE -->
+        <div>
+          <button class="button is-primary" type="submit">Modifier</button>
+          <button class="button is-danger" type="submit">X</button>
+        </div>
+      </div>
+      <% }); %>
+    </form>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer.ejs') %>
