@@ -6,6 +6,6 @@ const Services = require("./services.mapper");
 
 module.exports = {
   UserMapper: new User(db),
-  ContactsMapper: new Clients(db),
+  ClientsMapper: new Clients(db),
   ServicesMapper: new Services(db),
 };

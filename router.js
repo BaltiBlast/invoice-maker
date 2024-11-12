@@ -16,7 +16,7 @@ const { getInvoice, postInvoice } = invoiceControllers;
 
 // -- contacts
 const clientsController = require("./controllers/clients/clientsController");
-const { getClients, postClients } = clientsController;
+const { getClients, postClients, postClientsDelete } = clientsController;
 
 // -- general
 const generalControllers = require("./controllers/general/generalControllers");
@@ -42,6 +42,7 @@ router.post("/invoice", postInvoice);
 // CONTACTS ROUTES
 router.get("/clients", getClients);
 router.post("/clients", postClients);
+router.post("/client-delete", postClientsDelete);
 
 // SERVICES ROUTES
 router.get("/services", getServices);

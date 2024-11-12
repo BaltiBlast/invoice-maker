@@ -1,7 +1,7 @@
 <%- include('partials/head.ejs') %>
 
 <section>
-  <form class="mar-bot" action="services" method="POST">
+  <form class="mar-bot" action="/services" method="POST">
     <div class="control columns is-3">
       <!-- PRESTATION -->
       <div class="column field">
@@ -31,6 +31,8 @@
   </form>
 
   <div>
+    <h2 class="title is-4">Liste des préstations</h2>
+
     <% if (services) { %> <% services.forEach(function(service) { %>
     <form action="/service-delete" method="post" class="box is-flex is-justify-content-space-between">
       <div>

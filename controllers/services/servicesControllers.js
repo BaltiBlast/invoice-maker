@@ -4,8 +4,6 @@ const servicesControllers = {
   getServices: async (req, res) => {
     try {
       const services = await ServicesMapper.getServices();
-      console.log(services);
-
       res.render("services", { showNavbar: true, services });
     } catch (error) {
       console.log("[ERROR GETTING SERVICES] ", error);
