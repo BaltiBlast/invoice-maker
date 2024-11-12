@@ -1,7 +1,7 @@
 <%- include('partials/head.ejs') %>
 
 <section>
-  <form class="mar-bot" action="contacts" method="POST">
+  <form class="mar-bot" action="services" method="POST">
     <div class="control columns is-3">
       <!-- PRESTATION -->
       <div class="column field">
@@ -9,6 +9,7 @@
         <input
           class="input is-large"
           type="text"
+          name="serviceName"
           placeholder="Programme personnalisé, cours collectifs, etc..."
           required
         />
@@ -17,7 +18,7 @@
       <!-- PRIX -->
       <div class="column field">
         <label class="label">Prix</label>
-        <input class="input is-large" placeholder="25" required />
+        <input class="input is-large" type="number" name="servicePrice" placeholder="25" required />
       </div>
     </div>
 
@@ -30,23 +31,21 @@
   </form>
 
   <div>
-    <% if (services) { %>
-    <form action="/contacts-delete" method="post">
-      <% services.forEach(function(service) { %>
-      <div class="box is-flex is-justify-content-space-between">
-        <div>
-          <p><strong>Préstation:</strong> <%= service.service_name %></p>
-          <p><strong>Prix:</strong> <%= service.service_price %>€</p>
-        </div>
-        <!-- ADD INPUT WITH RECORD ID FOR DELETING HERE -->
-        <div>
-          <button class="button is-primary" type="submit">Modifier</button>
-          <button class="button is-danger" type="submit">X</button>
-        </div>
+    <% if (services) { %> <% services.forEach(function(service) { %>
+    <form action="/service-delete" method="post" class="box is-flex is-justify-content-space-between">
+      <div>
+        <p class="is-size-5"><strong>Préstation:</strong> <%= service.service_name %></p>
+        <p class="is-size-5"><strong>Prix:</strong> <%= service.service_price %>€</p>
       </div>
-      <% }); %>
+      <!-- ADD INPUT WITH RECORD ID FOR DELETING HERE -->
+      <input type="hidden" name="recordId" value="<%= service.recordId %>" />
+
+      <div>
+        <!-- <button class="button is-primary">Modifier</button> -->
+        <button class="button is-danger" type="submit">X</button>
+      </div>
     </form>
-    <% } %>
+    <% }); %> <% } %>
   </div>
 </section>
 

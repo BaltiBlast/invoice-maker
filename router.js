@@ -24,7 +24,7 @@ const { get404 } = generalControllers;
 
 // -- services
 const servicesControllers = require("./controllers/services/servicesControllers");
-const { getServices } = servicesControllers;
+const { getServices, postServices, postDeleteServices } = servicesControllers;
 
 // AUTH ROUTES
 router.get("/signin", getSignin);
@@ -43,9 +43,10 @@ router.post("/invoice", postInvoice);
 router.get("/clients", getClients);
 router.post("/clients", postClients);
 
-// CONTACTS ROUTES
+// SERVICES ROUTES
 router.get("/services", getServices);
-// router.post("/contacts", postContacts);
+router.post("/services", postServices);
+router.post("/service-delete", postDeleteServices);
 
 // 404
 router.use(get404);
