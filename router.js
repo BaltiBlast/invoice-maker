@@ -7,8 +7,8 @@ const authControllers = require("./controllers/auth/authControllers");
 const { getSignin, postSignin, getDisconnect } = authControllers;
 
 // -- user
-const userControllers = require("./controllers/user/userControllers");
-const { getUser, postUser } = userControllers;
+const userControllers = require("./controllers/user/profileControllers");
+const { getProfile, postProfile } = userControllers;
 
 // -- invoices
 const invoiceControllers = require("./controllers/invoices/invoiceControllers");
@@ -31,9 +31,9 @@ router.get("/signin", getSignin);
 router.post("/signin", postSignin);
 router.get("/disconnect", getDisconnect);
 
-// USER ROUTES
-router.get("/user", getUser);
-router.post("/user-update", postUser);
+// PROFILE ROUTES
+router.get("/profile", getProfile);
+router.post("/profile-update", postProfile);
 
 // INVOICES ROUTES
 router.get("/invoice", getInvoice);
