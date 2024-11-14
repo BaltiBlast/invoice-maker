@@ -24,8 +24,12 @@
 
       <!-- SUBMIT BUTTON -->
       <div class="field">
-        <div class="control">
-          <button class="button is-primary" type="submit">Sign In</button>
+        <div class="control is-flex">
+          <button class="button is-primary mar-right" type="submit">Sign In</button>
+
+          <% if (locals.errorMessage) { %>
+          <p class="is-size-4 has-text-danger"><%= errorMessage %></p>
+          <% } %>
         </div>
       </div>
     </form>

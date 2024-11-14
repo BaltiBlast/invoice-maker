@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { ensureAuthenticated } = require("./utils/middleware");
 
 // CONTROLLERS
 // -- auth
@@ -29,28 +30,28 @@ const { getServices, postServices, postDeleteServices } = servicesControllers;
 // AUTH ROUTES
 router.get("/signin", getSignin);
 router.post("/signin", postSignin);
-router.get("/disconnect", getDisconnect);
+router.get("/signout", ensureAuthenticated, getDisconnect);
 
 // PROFILE ROUTES
-router.get("/profile", getProfile);
-router.post("/profile-update", postProfile);
+router.get("/profile", ensureAuthenticated, getProfile);
+router.post("/profile-update", ensureAuthenticated, postProfile);
 
 // INVOICES ROUTES
-router.get("/invoice", getInvoice);
-router.post("/invoice", postInvoice);
+router.get("/invoice", ensureAuthenticated, getInvoice);
+router.post("/invoice", ensureAuthenticated, postInvoice);
 
 // CONTACTS ROUTES
-router.get("/clients", getClients);
-router.post("/clients", postClients);
-router.post("/client-delete", postClientsDelete);
+router.get("/clients", ensureAuthenticated, getClients);
+router.post("/clients", ensureAuthenticated, postClients);
+router.post("/client-delete", ensureAuthenticated, postClientsDelete);
 
 // SERVICES ROUTES
-router.get("/services", getServices);
-router.post("/services", postServices);
-router.post("/service-delete", postDeleteServices);
+router.get("/services", ensureAuthenticated, getServices);
+router.post("/services", ensureAuthenticated, postServices);
+router.post("/service-delete", ensureAuthenticated, postDeleteServices);
 
 // GENERAL ROUTES
-router.post("/send-email", postSendEmail);
+router.post("/send-email", ensureAuthenticated, postSendEmail);
 router.use(get404);
 
 module.exports = router;
