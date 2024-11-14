@@ -13,7 +13,7 @@ const clientsController = {
 
       res.render("clients", { showNavbar: true, clients: formattedClients });
     } catch (error) {
-      console.log("[ERROR GETTING CLIENTS] ", error);
+      console.error("[ERROR GETTING CLIENTS] ", error);
     }
   },
 
@@ -23,7 +23,7 @@ const clientsController = {
       await ClientsMapper.createClient(clientData);
       res.redirect("/clients");
     } catch (error) {
-      console.log("[ERROR CREATING CLIENT] ", error);
+      console.error("[ERROR CREATING CLIENT] ", error);
     }
   },
 
@@ -33,7 +33,7 @@ const clientsController = {
       await ClientsMapper.deleteClient(recordId);
       res.redirect("/clients");
     } catch (error) {
-      console.log("[ERROR DELETING CLIENT] ", error);
+      console.error("[ERROR DELETING CLIENT] ", error);
     }
   },
 };

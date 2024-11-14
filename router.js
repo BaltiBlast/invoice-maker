@@ -20,7 +20,7 @@ const { getClients, postClients, postClientsDelete } = clientsController;
 
 // -- general
 const generalControllers = require("./controllers/general/generalControllers");
-const { get404 } = generalControllers;
+const { get404, postSendEmail } = generalControllers;
 
 // -- services
 const servicesControllers = require("./controllers/services/servicesControllers");
@@ -49,7 +49,8 @@ router.get("/services", getServices);
 router.post("/services", postServices);
 router.post("/service-delete", postDeleteServices);
 
-// 404
+// GENERAL ROUTES
+router.post("/send-email", postSendEmail);
 router.use(get404);
 
 module.exports = router;

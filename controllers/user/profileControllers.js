@@ -6,7 +6,7 @@ const profileControllers = {
       const user = await UserMapper.getUser();
       res.render("profile", { showNavbar: true, user });
     } catch (error) {
-      console.log("[ERROR GETTING PROFILE] ", error);
+      console.error("[ERROR GETTING PROFILE] ", error);
     }
   },
 
@@ -16,7 +16,7 @@ const profileControllers = {
       await UserMapper.updateUser(user);
       res.redirect("/profile");
     } catch (error) {
-      console.log("[ERROR UPDATING USER PROFILE] ", error);
+      console.error("[ERROR UPDATING USER PROFILE] ", error);
     }
   },
 };

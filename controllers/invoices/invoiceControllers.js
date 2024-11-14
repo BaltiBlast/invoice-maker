@@ -1,9 +1,23 @@
+const { ClientsMapper, ServicesMapper, UserMapper } = require("../../models/index.mapper");
+const { allMonths } = require("../../utils/genericMethods");
+
 const invoiceControllers = {
-  getInvoice: (req, res) => {
-    res.render("invoice", { showNavbar: true });
+  getInvoice: async (req, res) => {
+    try {
+      const clients = await ClientsMapper.getClients();
+      const services = await ServicesMapper.getServices();
+      const months = allMonths;
+      const user = await UserMapper.getUser();
+
+      res.render("invoice", { showNavbar: true, clients, services, months, user });
+    } catch (error) {
+      console.error("[ERROR GETTING INVOICE] ", error);
+    }
   },
 
-  postInvoice: (req, res) => {},
+  postInvoice: (req, res) => {
+    console.error(req.body);
+  },
 };
 
 module.exports = invoiceControllers;

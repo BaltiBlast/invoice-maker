@@ -6,7 +6,7 @@ const servicesControllers = {
       const services = await ServicesMapper.getServices();
       res.render("services", { showNavbar: true, services });
     } catch (error) {
-      console.log("[ERROR GETTING SERVICES] ", error);
+      console.error("[ERROR GETTING SERVICES] ", error);
     }
   },
 
@@ -16,7 +16,7 @@ const servicesControllers = {
       await ServicesMapper.createService(servicesData);
       res.redirect("/services");
     } catch (error) {
-      console.log("[ERROR CREATING SERVICE] ", error);
+      console.error("[ERROR CREATING SERVICE] ", error);
     }
   },
 
@@ -26,7 +26,7 @@ const servicesControllers = {
       await ServicesMapper.deleteService(recordId);
       res.redirect("/services");
     } catch (error) {
-      console.log("[ERROR DELETING SERVICE] ", error);
+      console.error("[ERROR DELETING SERVICE] ", error);
     }
   },
 };

@@ -17,7 +17,6 @@ class ClientsMapper extends CoreMapper {
   // Créer un client
   async createClient(data) {
     const { clientName, email, adress, city, zipCode } = data;
-    console.log(data);
 
     await this.db(this.tableName).create([
       {
