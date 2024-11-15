@@ -32,6 +32,12 @@
           </select>
         </div>
       </div>
+
+      <!-- Numéro de facture -->
+      <div class="column field">
+        <label class="label">Numéro de facture</label>
+        <input id="inputInvoiceNumber" class="input" type="text" name="invoiceNumber" required />
+      </div>
     </div>
 
     <!-- Liste prestation -->
@@ -75,11 +81,12 @@
       Prévisualiser la facture
     </button>
   </form>
-</section>
 
-<!-- Injecte les données clients dans la page -->
-<script>
-  window.clientsData = <%- JSON.stringify(clients) %>;
-</script>
+  <script>
+    window.clientsData = <%- JSON.stringify(clients) %>;
+  </script>
+
+  <script src="/scripts/invoiceFormInteraction.js"></script>
+</section>
 
 <%- include('partials/footer.ejs') %>

@@ -5,18 +5,22 @@ const invoiceForm = document.getElementById("invoiceForm");
 const submitButton = document.getElementById("submitButton");
 const prestationPrice = document.getElementById("prestation-price");
 const totalPrice = document.getElementById("totalPrice");
-const invoiceToSend = document.getElementById("invoiceToSend");
+const sendButton = document.getElementById("send-button");
 const dateElement = document.getElementById("facture-month");
 const yearElement = document.getElementById("facture-year");
-const sendButton = document.getElementById("send-button");
+const invoiceToSend = document.getElementById("invoiceToSend");
+const invoiceNumber = document.getElementById("invoice-number");
+const inputInvoiceNumber = document.getElementById("inputInvoiceNumber");
 
 const invoiceFormInteraction = {
   init: () => {
+    setPrice();
     setClientData();
     setInvoiceDate();
+    setInvoiceNumber();
     isClientSelected();
     isMonthSelected();
-    setPrice();
+    isInvoiceNumberEmpty();
     showInvoicePreview();
     closeModal();
   },
@@ -49,6 +53,17 @@ const invoiceFormInteraction = {
       } else {
         document.getElementById("facture-month").textContent = "Mois";
         document.getElementById("facture-year").textContent = "Année";
+      }
+    });
+  },
+
+  setInvoiceNumber: () => {
+    inputInvoiceNumber.addEventListener("change", function (element) {
+      const invoiceNumberValue = element.target.value;
+      if (invoiceNumberValue) {
+        invoiceNumber.textContent = invoiceNumberValue;
+      } else {
+        invoiceNumber.textContent = "Numéro de facture";
       }
     });
   },
@@ -113,7 +128,12 @@ const invoiceFormInteraction = {
   checkFormValidity: () => {
     const isClientSelected = selectClient.value !== "";
     const isMonthSelected = selectMonth.value !== "";
-    submitButton.disabled = !(isClientSelected && isMonthSelected);
+    const isInvoiceNumberEmpty = inputInvoiceNumber.value !== "";
+    submitButton.disabled = !(isClientSelected && isMonthSelected && isInvoiceNumberEmpty);
+  },
+
+  isInvoiceNumberEmpty: () => {
+    inputInvoiceNumber.addEventListener("input", checkFormValidity);
   },
 
   isClientSelected: () => {
@@ -124,17 +144,31 @@ const invoiceFormInteraction = {
     selectMonth.addEventListener("change", checkFormValidity);
   },
 
-  generatePDF: () => {
+  generatePDF: async () => {
     const invoiceToSend = document.getElementById("invoiceToSend");
-    const htmlContent = invoiceToSend.outerHTML;
-    return htmlContent;
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    return new Promise((resolve) => {
+      doc.html(invoiceToSend, {
+        callback: function (doc) {
+          const pdfBase64 = doc.output("datauristring");
+          resolve(pdfBase64);
+        },
+        x: 10,
+        y: 10,
+        width: 180,
+        windowWidth: 800,
+      });
+    });
   },
 
   sendEmail: () => {
-    const htmlContent = generatePDF();
-
-    invoiceForm.addEventListener("submit", function (event) {
+    invoiceForm.addEventListener("submit", async function (event) {
       event.preventDefault();
+
+      const pdfInvoice = await generatePDF();
 
       const formData = new FormData(invoiceForm);
       const formValues = Object.fromEntries(formData.entries());
@@ -145,7 +179,7 @@ const invoiceFormInteraction = {
       const fullNames = `${userFirstName} ${userLastName}`;
 
       const dataToSend = {
-        htmlContent: htmlContent,
+        pdfInvoice: pdfInvoice,
         clientEmail: clientEmail,
         userName: fullNames,
         userEmail: userEmail,
@@ -181,16 +215,17 @@ const invoiceFormInteraction = {
 };
 
 const {
+  setPrice,
   setClientData,
+  setInvoiceDate,
+  setInvoiceNumber,
+  checkFormValidity,
   showInvoicePreview,
   closeModal,
-  setInvoiceDate,
-  setPrice,
-  checkFormValidity,
   isMonthSelected,
   isClientSelected,
+  isInvoiceNumberEmpty,
   generatePDF,
-  showToast,
 } = invoiceFormInteraction;
 
 document.addEventListener("DOMContentLoaded", invoiceFormInteraction.init());
