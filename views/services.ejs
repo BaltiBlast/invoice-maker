@@ -1,7 +1,7 @@
 <%- include('partials/head.ejs') %>
 
 <section>
-  <form class="mar-bot" action="/services" method="POST">
+  <form class="mar-bot" action="/service-add" method="POST">
     <div class="control columns is-3">
       <!-- PRESTATION -->
       <div class="column field">
@@ -43,10 +43,56 @@
       <input type="hidden" name="recordId" value="<%= service.recordId %>" />
 
       <div>
-        <!-- <button class="button is-primary">Modifier</button> -->
+        <button class="button is-primary" type="button" onclick="openModal('<%= service.recordId %>')">Modifier</button>
         <button class="button is-danger" type="submit">X</button>
       </div>
     </form>
+
+    <div id="<%= service.recordId %>" class="modal">
+      <div class="modal-background"></div>
+      <form action="/service-update" method="POST">
+        <div class="control columns is-3">
+          <!-- PRESTATION -->
+          <div class="column field">
+            <label class="label">Préstation</label>
+            <input
+              class="input is-large"
+              type="text"
+              name="serviceName"
+              value="<%= service.service_name %>"
+              placeholder="Programme personnalisé, cours collectifs, etc..."
+              required
+            />
+          </div>
+
+          <!-- PRIX -->
+          <div class="column field">
+            <label class="label">Prix</label>
+            <input
+              class="input is-large"
+              type="number"
+              name="servicePrice"
+              value="<%= service.service_price %>"
+              placeholder="25"
+              required
+            />
+          </div>
+        </div>
+
+        <input type="hidden" name="recordId" value="<%= service.recordId %>" />
+
+        <!-- BOUTON SUBMIT -->
+        <div class="field">
+          <div class="control is-flex is-justify-content-space-between">
+            <button class="button is-primary" type="submit">Mettre à jour</button>
+            <button class="button is-danger" type="button" onclick="closeModal('<%= service.recordId %>')">
+              Annuler
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!--  -->
     <% }); %> <% } %>
   </div>
 </section>

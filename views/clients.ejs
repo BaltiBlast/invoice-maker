@@ -1,7 +1,7 @@
 <%- include('partials/head.ejs') %>
 
 <section>
-  <form class="mar-bot" action="/clients" method="POST">
+  <form class="mar-bot" action="/client-add" method="POST">
     <!-- RAISON SOCIALE (nom ou entreprise) -->
     <div class="field">
       <div class="control columns is-3">
@@ -69,9 +69,68 @@
       <input type="hidden" name="recordId" value="<%= client.recordId %>" />
 
       <div>
+        <button class="button is-primary" type="button" onclick="openModal('<%= client.recordId %>')">Modifier</button>
         <button class="button is-danger" type="submit">X</button>
       </div>
     </form>
+
+    <div id="<%= client.recordId %>" class="modal">
+      <div class="modal-background"></div>
+      <form action="/client-update" method="POST">
+        <!-- RAISON SOCIALE (nom ou entreprise) -->
+        <div class="field">
+          <div class="control columns is-3">
+            <!-- RAISON SOCIALE -->
+            <div class="column field">
+              <label class="label">Entreprise OU nom de famille</label>
+              <input class="input is-large" type="text" name="clientName" value="<%= client.client_name %>" required />
+            </div>
+
+            <!-- EMAIL -->
+            <div class="column field">
+              <label class="label">Email</label>
+              <input class="input is-large" name="email" value="<%= client.client_email %>" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- ADRESSE -->
+        <div class="field">
+          <div class="control columns is-3">
+            <!-- NOM RUE -->
+            <div class="column field">
+              <label class="label">Nom de rue </label>
+              <input class="input is-large" name="adress" value="<%= client.client_adress %>" required />
+            </div>
+
+            <!-- VILLE -->
+            <div class="column field">
+              <label class="label">Ville</label>
+              <input class="input is-large" name="city" value="<%= client.client_city_name %>" required />
+            </div>
+
+            <!-- CODE POSTAL -->
+            <div class="column field">
+              <label class="label">Code postal</label>
+              <input class="input is-large" name="zipCode" value="<%= client.client_zip_code %>" required />
+            </div>
+          </div>
+        </div>
+
+        <input type="hidden" name="recordId" value="<%= client.recordId %>" />
+
+        <!-- BOUTON SUBMIT -->
+        <div class="field">
+          <div class="control is-flex is-justify-content-space-between">
+            <button class="button is-primary" type="submit">Mettre à jour</button>
+            <button class="button is-danger" type="button" onclick="closeModal('<%= client.recordId %>')">
+              Annuler
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
     <% }); %> <% } %>
   </div>
 </section>

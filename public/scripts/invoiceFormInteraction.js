@@ -188,7 +188,7 @@ const invoiceFormInteraction = {
 
       sendButton.classList.add("is-loading");
 
-      fetch("/send-email", {
+      fetch("/invoice-send-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

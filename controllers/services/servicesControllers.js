@@ -10,7 +10,7 @@ const servicesControllers = {
     }
   },
 
-  postServices: async (req, res) => {
+  postServicesAdd: async (req, res) => {
     try {
       const servicesData = req.body;
       await ServicesMapper.createService(servicesData);
@@ -20,7 +20,17 @@ const servicesControllers = {
     }
   },
 
-  postDeleteServices: async (req, res) => {
+  postServicesUpdate: async (req, res) => {
+    try {
+      const servicesData = req.body;
+      await ServicesMapper.updateService(servicesData);
+      res.redirect("/services");
+    } catch (error) {
+      console.error("[ERROR UPDATING SERVICE] ", error);
+    }
+  },
+
+  postServiceDelete: async (req, res) => {
     try {
       const { recordId } = req.body;
       await ServicesMapper.deleteService(recordId);

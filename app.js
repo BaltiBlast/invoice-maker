@@ -23,5 +23,5 @@ app.use(router);
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}/signin`);
+  console.log(`La broche tourne sur http://localhost:${port}`);
 });

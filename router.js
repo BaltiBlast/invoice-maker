@@ -13,19 +13,19 @@ const { getProfile, postProfile } = userControllers;
 
 // -- invoices
 const invoiceControllers = require("./controllers/invoices/invoiceControllers");
-const { getInvoice, postInvoice } = invoiceControllers;
+const { getInvoice } = invoiceControllers;
 
-// -- contacts
+// -- clients
 const clientsController = require("./controllers/clients/clientsController");
-const { getClients, postClients, postClientsDelete } = clientsController;
+const { getClients, postClientAdd, postClientsDelete, postClientUpdate } = clientsController;
 
 // -- general
 const generalControllers = require("./controllers/general/generalControllers");
-const { get404, postSendEmail } = generalControllers;
+const { get404, postSendEmail, getHome } = generalControllers;
 
 // -- services
 const servicesControllers = require("./controllers/services/servicesControllers");
-const { getServices, postServices, postDeleteServices } = servicesControllers;
+const { getServices, postServicesAdd, postServiceDelete, postServicesUpdate } = servicesControllers;
 
 // AUTH ROUTES
 router.get("/signin", getSignin);
@@ -38,20 +38,22 @@ router.post("/profile-update", ensureAuthenticated, postProfile);
 
 // INVOICES ROUTES
 router.get("/invoice", ensureAuthenticated, getInvoice);
-router.post("/invoice", ensureAuthenticated, postInvoice);
+router.post("/invoice-send-email", ensureAuthenticated, postSendEmail);
 
 // CONTACTS ROUTES
 router.get("/clients", ensureAuthenticated, getClients);
-router.post("/clients", ensureAuthenticated, postClients);
+router.post("/client-add", ensureAuthenticated, postClientAdd);
+router.post("/client-update", ensureAuthenticated, postClientUpdate);
 router.post("/client-delete", ensureAuthenticated, postClientsDelete);
 
 // SERVICES ROUTES
 router.get("/services", ensureAuthenticated, getServices);
-router.post("/services", ensureAuthenticated, postServices);
-router.post("/service-delete", ensureAuthenticated, postDeleteServices);
+router.post("/service-add", ensureAuthenticated, postServicesAdd);
+router.post("/service-update", ensureAuthenticated, postServicesUpdate);
+router.post("/service-delete", ensureAuthenticated, postServiceDelete);
 
 // GENERAL ROUTES
-router.post("/send-email", ensureAuthenticated, postSendEmail);
+router.get("/", ensureAuthenticated, getHome);
 router.use(get404);
 
 module.exports = router;

@@ -5,10 +5,10 @@ const clientsController = {
   getClients: async (req, res) => {
     try {
       const clients = await ClientsMapper.getClients();
-      const formattedClients = clients.map((contact) => {
-        const { client_adress, client_city_name, client_zip_code, ...newContact } = contact;
+      const formattedClients = clients.map((client) => {
+        const { client_adress, client_city_name, client_zip_code } = client;
         const formattedAdress = formatAdress(client_adress, client_city_name, client_zip_code);
-        return { ...newContact, formattedAdress };
+        return { ...client, formattedAdress };
       });
 
       res.render("clients", { showNavbar: true, clients: formattedClients });
@@ -17,13 +17,23 @@ const clientsController = {
     }
   },
 
-  postClients: async (req, res) => {
+  postClientAdd: async (req, res) => {
     try {
       const clientData = req.body;
       await ClientsMapper.createClient(clientData);
       res.redirect("/clients");
     } catch (error) {
       console.error("[ERROR CREATING CLIENT] ", error);
+    }
+  },
+
+  postClientUpdate: async (req, res) => {
+    try {
+      const clientData = req.body;
+      await ClientsMapper.updateClient(clientData);
+      res.redirect("/clients");
+    } catch (error) {
+      console.error("[ERROR UPDATING CLIENT] ", error);
     }
   },
 

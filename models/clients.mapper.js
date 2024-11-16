@@ -32,7 +32,17 @@ class ClientsMapper extends CoreMapper {
   }
 
   // Mettre à jour un client
-  async updateClient() {}
+  async updateClient(data) {
+    const { recordId, clientName, email, adress, city, zipCode } = data;
+
+    await this.db(this.tableName).update(recordId, {
+      client_name: clientName,
+      client_email: email,
+      client_adress: adress,
+      client_city_name: city,
+      client_zip_code: zipCode,
+    });
+  }
 
   // Supprimer un client
   async deleteClient(recordId) {

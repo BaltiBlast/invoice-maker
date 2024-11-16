@@ -14,10 +14,6 @@ const invoiceControllers = {
       console.error("[ERROR GETTING INVOICE] ", error);
     }
   },
-
-  postInvoice: (req, res) => {
-    console.error(req.body);
-  },
 };
 
 module.exports = invoiceControllers;

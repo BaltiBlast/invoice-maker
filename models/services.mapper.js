@@ -8,9 +8,9 @@ class ServicesMapper extends CoreMapper {
     const records = await this.db(this.tableName).select().all();
 
     return records.map((record) => {
-      const { id: recordId, fields: user } = record;
-      const { ...userData } = user;
-      return { ...userData, recordId };
+      const { id: recordId, fields: servcices } = record;
+      const { ...servicesData } = servcices;
+      return { ...servicesData, recordId };
     });
   }
 
@@ -29,7 +29,14 @@ class ServicesMapper extends CoreMapper {
   }
 
   // Mettre à jour un service
-  async updateService() {}
+  async updateService(data) {
+    const { recordId, serviceName, servicePrice } = data;
+
+    await this.db(this.tableName).update(recordId, {
+      service_name: serviceName,
+      service_price: servicePrice,
+    });
+  }
 
   // Supprimer un service
   async deleteService(recordId) {
