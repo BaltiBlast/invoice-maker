@@ -28,10 +28,13 @@ const invoiceFormInteraction = {
   setClientData: () => {
     selectClient.addEventListener("change", function (element) {
       const selectedClient = clients.find((client) => client.client_email == element.target.value);
+
       if (selectedClient) {
         document.getElementById("client-name").textContent = selectedClient.client_name;
         document.getElementById("client-adress").textContent = selectedClient.client_adress;
         document.getElementById("client-email").textContent = selectedClient.client_email;
+        document.getElementById("client-recordId").value = selectedClient.recordId;
+        document.getElementById("actual-price").value = selectedClient.client_total_payment;
 
         const formatedAdress = `${selectedClient.client_city_name} - ${selectedClient.client_zip_code}`;
         document.getElementById("client-city").textContent = formatedAdress;
@@ -173,7 +176,9 @@ const invoiceFormInteraction = {
       const formData = new FormData(invoiceForm);
       const formValues = Object.fromEntries(formData.entries());
 
-      const { clientEmail, userLastName, userFirstName, userEmail } = formValues;
+      const { clientEmail, userLastName, userFirstName, userEmail, recordId, actuelPrice } = formValues;
+      const newTotalPrice = (parseFloat(actuelPrice) + parseFloat(totalPrice.textContent)).toString();
+
       const formatedDate = `${dateElement.textContent} ${yearElement.textContent}`;
 
       const fullNames = `${userFirstName} ${userLastName}`;
@@ -181,6 +186,8 @@ const invoiceFormInteraction = {
       const dataToSend = {
         pdfInvoice: pdfInvoice,
         clientEmail: clientEmail,
+        newTotalPrice: newTotalPrice.toString(),
+        recordId: recordId,
         userName: fullNames,
         userEmail: userEmail,
         date: formatedDate,

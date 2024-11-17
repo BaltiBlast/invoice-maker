@@ -26,6 +26,7 @@ class ClientsMapper extends CoreMapper {
           client_adress: adress,
           client_city_name: city,
           client_zip_code: zipCode,
+          client_total_payment: "0",
         },
       },
     ]);
@@ -33,7 +34,7 @@ class ClientsMapper extends CoreMapper {
 
   // Mettre à jour un client
   async updateClient(data) {
-    const { recordId, clientName, email, adress, city, zipCode } = data;
+    const { recordId, clientName, email, adress, city, zipCode, newTotalPrice } = data;
 
     await this.db(this.tableName).update(recordId, {
       client_name: clientName,
@@ -41,6 +42,7 @@ class ClientsMapper extends CoreMapper {
       client_adress: adress,
       client_city_name: city,
       client_zip_code: zipCode,
+      client_total_payment: newTotalPrice,
     });
   }
 

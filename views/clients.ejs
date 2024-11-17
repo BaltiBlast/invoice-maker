@@ -61,9 +61,21 @@
     <% if (clients) { %> <% clients.forEach(function(client) { %>
     <form action="/client-delete" method="post" class="box is-flex is-justify-content-space-between">
       <div>
-        <p><strong>Entreprise/Nom:</strong> <%= client.client_name %></p>
-        <p><strong>Adresse:</strong> <%= client.formattedAdress %></p>
-        <p><strong>Mail:</strong> <%= client.client_email %></p>
+        <p class="is-flex">
+          <span class="icon mar-right"><box-icon color="white" name="user"></box-icon></span> <%= client.client_name %>
+        </p>
+        <p class="is-flex">
+          <span class="icon mar-right"><box-icon color="white" name="home-alt-2"></box-icon></span> <%=
+          client.formattedAdress %>
+        </p>
+        <p class="is-flex">
+          <span class="icon mar-right"><box-icon color="white" name="envelope"></box-icon></span> <%=
+          client.client_email %>
+        </p>
+        <p class="is-flex">
+          <span class="icon mar-right"><box-icon color="white" name="euro"></box-icon></span> <%=
+          client.client_total_payment %>€
+        </p>
       </div>
       <!-- ADD INPUT WITH RECORD ID FOR DELETING HERE -->
       <input type="hidden" name="recordId" value="<%= client.recordId %>" />

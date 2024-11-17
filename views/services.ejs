@@ -36,8 +36,14 @@
     <% if (services) { %> <% services.forEach(function(service) { %>
     <form action="/service-delete" method="post" class="box is-flex is-justify-content-space-between">
       <div>
-        <p class="is-size-5"><strong>Préstation:</strong> <%= service.service_name %></p>
-        <p class="is-size-5"><strong>Prix:</strong> <%= service.service_price %>€</p>
+        <p class="is-flex">
+          <span class="icon mar-right"><box-icon color="white" name='dumbbell' ></box-icon></box-icon></span> <%= service.service_name
+          %>
+        </p>
+        <p class="is-flex">
+          <span class="icon mar-right"><box-icon color="white" name='euro' ></box-icon></box-icon></span> <%= service.service_price
+          %>
+        </p>
       </div>
       <!-- ADD INPUT WITH RECORD ID FOR DELETING HERE -->
       <input type="hidden" name="recordId" value="<%= service.recordId %>" />

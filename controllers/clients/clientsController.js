@@ -5,6 +5,7 @@ const clientsController = {
   getClients: async (req, res) => {
     try {
       const clients = await ClientsMapper.getClients();
+
       const formattedClients = clients.map((client) => {
         const { client_adress, client_city_name, client_zip_code } = client;
         const formattedAdress = formatAdress(client_adress, client_city_name, client_zip_code);

@@ -1,9 +1,10 @@
 const transporter = require("../../configs/nodemailer");
+const { ClientsMapper } = require("../../models/index.mapper");
 
 const generalControllers = {
   postSendEmail: async (req, res) => {
     try {
-      const { pdfInvoice, clientEmail, userEmail, date, userName } = req.body;
+      const { pdfInvoice, clientEmail, userEmail, date, userName, recordId, newTotalPrice } = req.body;
 
       const invoiceBase64 = pdfInvoice.split(",")[1];
       const invoiceBuffer = Buffer.from(invoiceBase64, "base64");
@@ -23,10 +24,12 @@ const generalControllers = {
       };
 
       await transporter.sendMail(mailOptions);
-      res.json({ reload: true, toastSuccessMessage: "Factgure envoyé" });
+
+      await ClientsMapper.updateClient({ recordId, newTotalPrice });
+      res.json({ reload: true });
     } catch (error) {
       console.error("[ERROR SENDING EMAIL] ", error);
-      res.json({ reload: true, toastFailMessage: "Erreur lors de l'envoi de la facture" });
+      res.json({ reload: true });
     }
   },
 
