@@ -6,7 +6,7 @@ const submitButton = document.getElementById("submitButton");
 const prestationPrice = document.getElementById("prestation-price");
 const totalPrice = document.getElementById("totalPrice");
 const sendButton = document.getElementById("send-button");
-const dateElement = document.getElementById("facture-month");
+const invoiceMonth = document.getElementById("facture-month");
 const yearElement = document.getElementById("facture-year");
 const invoiceToSend = document.getElementById("invoiceToSend");
 const invoiceNumber = document.getElementById("invoice-number");
@@ -35,6 +35,7 @@ const invoiceFormInteraction = {
         document.getElementById("client-email").textContent = selectedClient.client_email;
         document.getElementById("client-recordId").value = selectedClient.recordId;
         document.getElementById("actual-price").value = selectedClient.client_total_payment;
+        document.getElementById("client-id").value = selectedClient.client_id;
 
         const formatedAdress = `${selectedClient.client_city_name} - ${selectedClient.client_zip_code}`;
         document.getElementById("client-city").textContent = formatedAdress;
@@ -52,7 +53,7 @@ const invoiceFormInteraction = {
       const selectedMonth = element.target.value;
       if (selectedMonth) {
         yearElement.textContent = new Date().getFullYear();
-        dateElement.textContent = selectedMonth;
+        invoiceMonth.textContent = selectedMonth;
       } else {
         document.getElementById("facture-month").textContent = "Mois";
         document.getElementById("facture-year").textContent = "Année";
@@ -176,14 +177,22 @@ const invoiceFormInteraction = {
       const formData = new FormData(invoiceForm);
       const formValues = Object.fromEntries(formData.entries());
 
-      const { clientEmail, userLastName, userFirstName, userEmail, recordId, actuelPrice } = formValues;
+      const { clientEmail, userLastName, userFirstName, userEmail, recordId, actuelPrice, clientId } = formValues;
       const newTotalPrice = (parseFloat(actuelPrice) + parseFloat(totalPrice.textContent)).toString();
 
-      const formatedDate = `${dateElement.textContent} ${yearElement.textContent}`;
+      const formatedDate = `${invoiceMonth.textContent} ${yearElement.textContent}`;
 
       const fullNames = `${userFirstName} ${userLastName}`;
 
-      const dataToSend = {
+      const invoiceDbData = {
+        invoiceMonth: invoiceMonth.textContent,
+        invoiceYear: yearElement.textContent,
+        invoiceIncome: totalPrice.textContent,
+        invoiceClient: clientEmail,
+        invoiceClientId: clientId,
+      };
+
+      const data = {
         pdfInvoice: pdfInvoice,
         clientEmail: clientEmail,
         newTotalPrice: newTotalPrice.toString(),
@@ -191,6 +200,7 @@ const invoiceFormInteraction = {
         userName: fullNames,
         userEmail: userEmail,
         date: formatedDate,
+        invoiceDbData,
       };
 
       sendButton.classList.add("is-loading");
@@ -200,10 +210,32 @@ const invoiceFormInteraction = {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(dataToSend),
+        body: JSON.stringify(data),
       })
         .then((response) => response.json())
         .then((data) => {
+          if (data.success) {
+            const base64Data = pdfInvoice.split(",")[1];
+            const binaryData = atob(base64Data);
+            const arrayBuffer = new Uint8Array(binaryData.length);
+
+            for (let i = 0; i < binaryData.length; i++) {
+              arrayBuffer[i] = binaryData.charCodeAt(i);
+            }
+
+            const blob = new Blob([arrayBuffer], { type: "application/pdf" });
+
+            // Créer un lien de téléchargement
+            const downloadLink = document.createElement("a");
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = `facture_${formatedDate}.pdf`;
+
+            // Simuler un clic pour télécharger
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+          }
+
           if (data.reload) {
             sendButton.classList.remove("is-loading");
             location.reload();

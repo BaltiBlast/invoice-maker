@@ -10,8 +10,15 @@ const genericMethods = {
     const modal = document.getElementById(recordId);
     modal.classList.remove("is-active");
   },
+
+  toggleDetails: (id) => {
+    const detailsRow = document.getElementById(id);
+    if (detailsRow) {
+      detailsRow.classList.toggle("is-hidden");
+    }
+  },
 };
 
-const { initGenericMethods, closeModal, openModal } = genericMethods;
+const { initGenericMethods, closeModal, openModal, toggleDetails } = genericMethods;
 
 document.addEventListener("DOMContentLoaded", initGenericMethods());

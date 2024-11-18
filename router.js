@@ -13,7 +13,7 @@ const { getProfile, postProfile } = userControllers;
 
 // -- invoices
 const invoiceControllers = require("./controllers/invoices/invoiceControllers");
-const { getInvoice } = invoiceControllers;
+const { getInvoice, postSendInvoiceEmail } = invoiceControllers;
 
 // -- clients
 const clientsController = require("./controllers/clients/clientsController");
@@ -21,11 +21,15 @@ const { getClients, postClientAdd, postClientsDelete, postClientUpdate } = clien
 
 // -- general
 const generalControllers = require("./controllers/general/generalControllers");
-const { get404, postSendEmail, getHome } = generalControllers;
+const { get404, getHome } = generalControllers;
 
 // -- services
 const servicesControllers = require("./controllers/services/servicesControllers");
 const { getServices, postServicesAdd, postServiceDelete, postServicesUpdate } = servicesControllers;
+
+// -- summary
+const summaryControllers = require("./controllers/summary/summaryControllers");
+const { getSummary } = summaryControllers;
 
 // AUTH ROUTES
 router.get("/signin", getSignin);
@@ -38,7 +42,7 @@ router.post("/profile-update", ensureAuthenticated, postProfile);
 
 // INVOICES ROUTES
 router.get("/invoice", ensureAuthenticated, getInvoice);
-router.post("/invoice-send-email", ensureAuthenticated, postSendEmail);
+router.post("/invoice-send-email", ensureAuthenticated, postSendInvoiceEmail);
 
 // CONTACTS ROUTES
 router.get("/clients", ensureAuthenticated, getClients);
@@ -51,6 +55,9 @@ router.get("/services", ensureAuthenticated, getServices);
 router.post("/service-add", ensureAuthenticated, postServicesAdd);
 router.post("/service-update", ensureAuthenticated, postServicesUpdate);
 router.post("/service-delete", ensureAuthenticated, postServiceDelete);
+
+// SUMMARY ROUTES
+router.get("/summary", ensureAuthenticated, getSummary);
 
 // GENERAL ROUTES
 router.get("/", ensureAuthenticated, getHome);

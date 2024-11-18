@@ -1,0 +1,53 @@
+<%- include('partials/head.ejs') %>
+
+<section>
+  <table class="table is-fullwidth is-hoverable">
+    <thead>
+      <tr>
+        <th>Année</th>
+        <th>Total</th>
+        <th>URSAFF</th>
+        <th>Détails</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (formatedInvoicesSummary) { %> <% formatedInvoicesSummary.forEach(el => { %>
+
+      <!-- Ligne de l'année -->
+      <tr class="is-clickable" onclick="toggleDetails('<%= el.invoice_year %>')">
+        <td><%=el.invoice_year%></td>
+        <td><%=el.totalIncome%>€</td>
+        <td><%=el.totalURSSAF%>€</td>
+        <td><box-icon color="white" name="down-arrow-alt"></box-icon></td>
+      </tr>
+
+      <!-- Détails de l'année -->
+      <tr id="<%= el.invoice_year %>" class="is-hidden">
+        <td colspan="4">
+          <table class="table is-bordered is-fullwidth">
+            <thead>
+              <tr>
+                <th>Mois</th>
+                <th>Revenus</th>
+                <th>URSAFF</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (el.invoice_months) { %> <% el.invoice_months.forEach(month => { %>
+              <tr>
+                <td><%= month.month %></td>
+                <td><%= month.totalIncome %></td>
+                <td><%= month.URSSAF %></td>
+              </tr>
+              <% })} %>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+
+      <% })} %>
+    </tbody>
+  </table>
+</section>
+
+<%- include('partials/footer.ejs') %>

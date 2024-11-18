@@ -39,6 +39,10 @@
   border-radius: 50%;
 }
 
+.is-hidden {
+  display: none;
+}
+
 /* ----------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------------- */
@@ -107,11 +111,12 @@
 
 /* Footer toujours en bas */
 .facture-footer {
+  display: flex;
+  justify-content: space-around;
   margin-top: auto;
-  padding: 1cm;
+  padding: 0.2cm;
   border-top: 0.05cm solid #ddd;
   color: #666;
-  text-align: center;
   font-size: 0.4cm;
 }
 
