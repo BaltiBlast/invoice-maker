@@ -1,8 +1,12 @@
+// ===== IMPORTS ===== //
 const { ClientsMapper, ServicesMapper, UserMapper, InvoicesMapper } = require("../../models/index.mapper");
-const transporter = require("../../configs/nodemailer");
 const { allMonths } = require("../../utils/genericMethods");
+const transporter = require("../../configs/nodemailer");
 
+// ===== CONTROLLERS ===== //
 const invoiceControllers = {
+  // ------------------------------------------------------------------------------------ //
+  // Method to display the invoice page
   getInvoice: async (req, res) => {
     try {
       const clients = await ClientsMapper.getClients();
@@ -12,10 +16,12 @@ const invoiceControllers = {
 
       res.render("invoice", { showNavbar: true, clients, services, months, user });
     } catch (error) {
-      console.error("[ERROR GETTING INVOICE] ", error);
+      console.error("[ERROR getInvoice in invoiceControllers.js] :", error);
     }
   },
 
+  // ------------------------------------------------------------------------------------ //
+  // Method to send the invoice by email
   postSendInvoiceEmail: async (req, res) => {
     try {
       const { pdfInvoice, clientEmail, userEmail, date, userName, recordId, newTotalPrice, invoiceDbData } = req.body;
@@ -37,13 +43,17 @@ const invoiceControllers = {
         ],
       };
 
+      // Send the email
       await transporter.sendMail(mailOptions);
+
+      // Add the invoice's informations database
       await InvoicesMapper.addInvoice(invoiceDbData);
 
+      // Update the client total price
       await ClientsMapper.updateClient({ recordId, newTotalPrice });
       res.json({ reload: true, success: true });
     } catch (error) {
-      console.error("[ERROR SENDING EMAIL] ", error);
+      console.error("[ERROR postSendInvoiceEmail in invoiceControllers.js] :", error);
       res.json({ reload: true });
     }
   },

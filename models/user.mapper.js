@@ -1,8 +1,12 @@
+// ===== IMPORTS ===== //
 const CoreMapper = require("./core.mapper");
 
+// ===== USER MAPPER ===== //
 class UserMapper extends CoreMapper {
   tableName = "user";
 
+  // ------------------------------------------------------------------------------------ //
+  // Mapper to get user data
   async getUser() {
     const records = await this.db(this.tableName).select().all();
 
@@ -10,6 +14,8 @@ class UserMapper extends CoreMapper {
     return { ...user, recordId };
   }
 
+  // ------------------------------------------------------------------------------------ //
+  // Mapper to update user data
   async updateUser(user) {
     const { lastName, firstName, email, adress, city, zipCode, legalForm, siret, recordId } = user;
 

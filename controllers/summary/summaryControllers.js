@@ -1,6 +1,10 @@
+// ===== IMPORTS ===== //
 const { InvoicesMapper } = require("../../models/index.mapper");
 
+// ===== CONTROLLERS ===== //
 const summaryControllers = {
+  // ------------------------------------------------------------------------------------ //
+  // Method to display the summary page
   getSummary: async (req, res) => {
     try {
       const invoicesSummary = await InvoicesMapper.getInvoices();
@@ -43,7 +47,7 @@ const summaryControllers = {
 
       res.render("summary", { showNavbar: true, formatedInvoicesSummary });
     } catch (error) {
-      console.log(error);
+      console.error("[ERROR getSummary in summaryControllers.js] :", error);
     }
   },
 };

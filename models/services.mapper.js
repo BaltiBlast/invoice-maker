@@ -1,9 +1,12 @@
+// ===== IMPORTS ===== //
 const CoreMapper = require("./core.mapper");
 
+// ===== SERVICES MAPPER ===== //
 class ServicesMapper extends CoreMapper {
   tableName = "services";
 
-  // Récupérer les services
+  // ------------------------------------------------------------------------------------ //
+  // Mapper to get all services
   async getServices() {
     const records = await this.db(this.tableName).select().all();
 
@@ -14,7 +17,8 @@ class ServicesMapper extends CoreMapper {
     });
   }
 
-  // Créer un service
+  // ------------------------------------------------------------------------------------ //
+  // Mapper to create a service
   async createService(data) {
     const { serviceName, servicePrice } = data;
 
@@ -28,7 +32,8 @@ class ServicesMapper extends CoreMapper {
     ]);
   }
 
-  // Mettre à jour un service
+  // ------------------------------------------------------------------------------------ //
+  // Mapper to update a service
   async updateService(data) {
     const { recordId, serviceName, servicePrice } = data;
 
@@ -38,7 +43,8 @@ class ServicesMapper extends CoreMapper {
     });
   }
 
-  // Supprimer un service
+  // ------------------------------------------------------------------------------------ //
+  // Mapper to delete a service
   async deleteService(recordId) {
     await this.db(this.tableName).destroy(recordId);
   }

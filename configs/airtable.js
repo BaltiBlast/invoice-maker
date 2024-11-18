@@ -1,6 +1,8 @@
+// ===== IMPORTS ===== //
 const Airtable = require("airtable");
 require("dotenv").config();
 
+// ===== ENVIRONMENT VARIABLES ===== //
 const { AIRTABLE_BASE_ID, AIRTABLE_API_KEY } = process.env;
 
 const apiKey = AIRTABLE_API_KEY;

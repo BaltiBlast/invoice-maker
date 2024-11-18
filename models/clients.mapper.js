@@ -1,9 +1,12 @@
+// ===== IMPORTS ===== //
 const CoreMapper = require("./core.mapper");
 
+// ===== CLIENTS MAPPER ===== //
 class ClientsMapper extends CoreMapper {
   tableName = "clients";
 
-  // Récupérer les clients
+  // ------------------------------------------------------------------------------------ //
+  // Mapper to get clients data
   async getClients() {
     const records = await this.db(this.tableName).select().all();
 
@@ -14,7 +17,8 @@ class ClientsMapper extends CoreMapper {
     });
   }
 
-  // Créer un client
+  // ------------------------------------------------------------------------------------ //
+  // Mapper to create a new client
   async createClient(data) {
     const { clientName, email, adress, city, zipCode } = data;
 
@@ -32,7 +36,8 @@ class ClientsMapper extends CoreMapper {
     ]);
   }
 
-  // Mettre à jour un client
+  // ------------------------------------------------------------------------------------ //
+  // Mapper to update a client
   async updateClient(data) {
     const { recordId, clientName, email, adress, city, zipCode, newTotalPrice } = data;
 
@@ -46,7 +51,8 @@ class ClientsMapper extends CoreMapper {
     });
   }
 
-  // Supprimer un client
+  // ------------------------------------------------------------------------------------ //
+  // Mapper to delete a client
   async deleteClient(recordId) {
     await this.db(this.tableName).destroy(recordId);
   }

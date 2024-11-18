@@ -1,9 +1,12 @@
+// ===== IMPORTS ===== //
 const CoreMapper = require("./core.mapper");
 
+// ===== INVOICES MAPPER ===== //
 class InvoicesMapper extends CoreMapper {
   tableName = "invoices";
 
-  // Récupérer les factures
+  // ------------------------------------------------------------------------------------ //
+  // Mapper to get invoices data
   async getInvoices() {
     const records = await this.db(this.tableName).select().all();
 
@@ -14,7 +17,8 @@ class InvoicesMapper extends CoreMapper {
     });
   }
 
-  // Créer un client
+  // ------------------------------------------------------------------------------------ //
+  // Mapper to add new invoice
   async addInvoice(data) {
     const { invoiceMonth, invoiceYear, invoiceIncome, invoiceClientId } = data;
 
