@@ -178,6 +178,8 @@ const invoiceFormInteraction = {
       const formValues = Object.fromEntries(formData.entries());
 
       const { clientEmail, userLastName, userFirstName, userEmail, recordId, actuelPrice, clientId } = formValues;
+      console.log("FORM VALUES", formValues);
+
       const newTotalPrice = (parseFloat(actuelPrice) + parseFloat(totalPrice.textContent)).toString();
 
       const formatedDate = `${invoiceMonth.textContent} ${yearElement.textContent}`;
@@ -225,10 +227,12 @@ const invoiceFormInteraction = {
 
             const blob = new Blob([arrayBuffer], { type: "application/pdf" });
 
+            const clientName = document.getElementById("client-name").textContent;
+
             // Créer un lien de téléchargement
             const downloadLink = document.createElement("a");
             downloadLink.href = URL.createObjectURL(blob);
-            downloadLink.download = `facture_${formatedDate}.pdf`;
+            downloadLink.download = `facture_${clientName}_${formatedDate}_n°${invoiceNumber.textContent}.pdf`;
 
             // Simuler un clic pour télécharger
             document.body.appendChild(downloadLink);
