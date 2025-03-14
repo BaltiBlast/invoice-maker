@@ -43,6 +43,14 @@
   display: none;
 }
 
+.reset-link {
+  text-decoration: none; /* Enlève le soulignement */
+  color: inherit; /* Hérite de la couleur du texte parent */
+  background: none; /* Enlève le fond */
+  border: none; /* Enlève la bordure */
+  outline: none; /* Enlève l'effet de focus ou de surbrillance */
+}
+
 /* ----------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------------- */

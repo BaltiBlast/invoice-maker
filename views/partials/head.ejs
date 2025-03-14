@@ -3,14 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" /> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
     <link rel="stylesheet" href="/css/style.css" />
     <title>La raterie</title>
   </head>
   <body>
     <% if (showNavbar) { %>
-    <header class="mar-bot">
-      <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <header class="container">
+      <nav>
+        <ul>
+          <li>
+            <h1>
+              <a class="reset-link" href="/invoice"><b>.La Raterie</b></a>
+            </h1>
+          </li>
+        </ul>
+
+        <ul>
+          <li>
+            <details class="dropdown">
+              <summary>Menu</summary>
+              <ul dir="rtl">
+                <li><a class="contrast" href="/invoice">Facture</a></li>
+                <li><a class="contrast" href="/clients">Clients</a></li>
+                <li><a class="contrast" href="/services">Prestations</a></li>
+                <li><a class="contrast" href="/summary">Récapitulatif</a></li>
+                <li><a class="contrast" href="/profile">Profil</a></li>
+                <li>
+                  <a class="constrast" href="/signout"><strong>Déconnexion</strong></a>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </nav>
+
+      <!--------------------------------------------------------------------------------------------------------------------------------->
+      <!--------------------------------------------------------------------------------------------------------------------------------->
+      <!--------------------------------------------------------------------------------------------------------------------------------->
+      <!-- OLD VERSION -->
+      <!-- <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
         <section class="container">
           <div class="navbar-brand">
             <a class="navbar-item" href="/">
@@ -34,7 +67,10 @@
             </div>
           </div>
         </section>
-      </nav>
+      </nav> -->
+      <!--------------------------------------------------------------------------------------------------------------------------------->
+      <!--------------------------------------------------------------------------------------------------------------------------------->
+      <!--------------------------------------------------------------------------------------------------------------------------------->
     </header>
     <% } %>
     <main class="container full-height-vh">
