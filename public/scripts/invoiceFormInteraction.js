@@ -150,20 +150,25 @@ const invoiceFormInteraction = {
 
   generatePDF: async () => {
     const invoiceToSend = document.getElementById("invoiceToSend");
-
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
     return new Promise((resolve) => {
-      doc.html(invoiceToSend, {
-        callback: function (doc) {
-          const pdfBase64 = doc.output("datauristring");
-          resolve(pdfBase64);
-        },
-        x: 10,
-        y: 10,
-        width: 180,
-        windowWidth: 800,
+      html2canvas(invoiceToSend, {
+        scale: 2,
+      }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/webp", 1);
+        const pdfWidth = doc.internal.pageSize.getWidth();
+
+        const imgWidth = pdfWidth;
+        const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+
+        const xPos = (pdfWidth - imgWidth) / 2;
+        const yPos = 10;
+
+        doc.addImage(imgData, "WEBP", xPos, yPos, imgWidth, imgHeight);
+        const pdfBase64 = doc.output("datauristring");
+        resolve(pdfBase64);
       });
     });
   },

@@ -97,50 +97,8 @@
 /* ----------------------------------------------------------------------------------- */
 /* INVOICE PDF */
 
-.pdf-frame {
-  display: flex;
-  flex-direction: column;
-}
-
 .facture-container {
   min-width: 21cm;
   min-height: 29.7cm;
   font-size: initial;
-}
-
-/* Entête avec informations prestataire et client */
-.facture-header {
-  display: flex;
-  justify-content: space-around;
-  padding-bottom: 1cm;
-  text-align: center;
-}
-
-/* Date de facturation centrée */
-.facture-date {
-  text-align: center;
-  font-size: 0.5cm;
-  margin-bottom: 1cm;
-}
-
-.facture-table th {
-  font-weight: bold;
-}
-
-.facture-table tfoot th {
-  font-weight: bold;
-}
-
-/* Footer toujours en bas */
-.facture-footer {
-  display: flex;
-  justify-content: space-around;
-  border-top: 0.05cm solid #ddd;
-  font-size: 0.4cm;
-}
-
-.footer-facture-button-container {
-  display: flex;
-  justify-content: space-around;
-  width: 21cm;
 }

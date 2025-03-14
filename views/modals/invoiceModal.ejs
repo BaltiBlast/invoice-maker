@@ -1,9 +1,9 @@
-<dialog id="invoiceModal" class="flex-direction-column" open>
+<dialog id="invoiceModal" class="flex-direction-column">
   <article id="invoiceToSend" class="facture-container">
     <section class="grid background-color-white">
       <!-- Infos Prestataire -->
       <div class="flex-direction-column">
-        <h4 class="title is-4 facture-title">Prestataire</h4>
+        <b><h4>Prestataire</h4></b>
         <span><%= user.user_first_name %> <%= user.user_last_name %></span>
         <span><%= user.user_adress %></span>
         <span><%= user.user_city_name %> - <%= user.user_zip_code %></span>
@@ -12,7 +12,7 @@
 
       <!-- Infos Client -->
       <div class="flex-direction-column">
-        <h4 class="title is-4 facture-title">Client</h4>
+        <b><h4>Client</h4></b>
         <span id="client-name"></span>
         <span id="client-adress"></span>
         <span id="client-city"></span>
@@ -22,10 +22,12 @@
 
     <main>
       <!-- Date de Facturation -->
-      <div class="facture-date">
-        Facture n°<span id="invoice-number">Numero</span> - <span id="facture-month">Mois</span>
-        <span id="facture-year">Année</span>
-      </div>
+      <section>
+        <strong>
+          Facture n°<span id="invoice-number">Numero</span> - <span id="facture-month">Mois</span>
+          <span id="facture-year">Année</span>
+        </strong>
+      </section>
 
       <!-- Tableau des Prestations -->
       <table class="facture-table striped">
@@ -46,7 +48,7 @@
         </tfoot>
       </table>
       <!-- Footer de la Facture -->
-      <div class="facture-footer">
+      <div class="grid">
         <span>TVA non applicable art.293 B du CGI</span>
         <div class="flex-direction-column">
           <span>IBAN :FR76 1610 6840 0696 0044 2209 882</span>
