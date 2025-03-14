@@ -249,11 +249,11 @@ const invoiceFormInteraction = {
   },
 
   showInvoicePreview: () => {
-    document.getElementById("invoiceModal").classList.add("is-active");
+    document.getElementById("invoiceModal").showModal();
   },
 
   closeModal: () => {
-    document.getElementById("invoiceModal").classList.remove("is-active");
+    document.getElementById("invoiceModal").close();
   },
 };
 

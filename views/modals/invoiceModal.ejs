@@ -1,27 +1,26 @@
-<div id="invoiceModal" class="modal">
-  <div class="modal-background"></div>
-  <div class="modal-content pdf-frame mar-bot">
-    <div id="invoiceToSend" class="facture-container">
-      <div class="facture-header">
-        <!-- Infos Prestataire -->
-        <div class="facture-prestataire">
-          <h2 class="title is-4 facture-title">Prestataire</h2>
-          <p><%= user.user_first_name %> <%= user.user_last_name %></p>
-          <p><%= user.user_adress %></p>
-          <p><%= user.user_city_name %> - <%= user.user_zip_code %></p>
-          <p><%= user.user_email %></p>
-        </div>
-
-        <!-- Infos Client -->
-        <div class="facture-client">
-          <h2 class="title is-4 facture-title">Client</h2>
-          <p id="client-name"></p>
-          <p id="client-adress"></p>
-          <p id="client-city"></p>
-          <p id="client-email"></p>
-        </div>
+<dialog id="invoiceModal" class="flex-direction-column" open>
+  <article id="invoiceToSend" class="facture-container">
+    <section class="grid background-color-white">
+      <!-- Infos Prestataire -->
+      <div class="flex-direction-column">
+        <h4 class="title is-4 facture-title">Prestataire</h4>
+        <span><%= user.user_first_name %> <%= user.user_last_name %></span>
+        <span><%= user.user_adress %></span>
+        <span><%= user.user_city_name %> - <%= user.user_zip_code %></span>
+        <span><%= user.user_email %></span>
       </div>
 
+      <!-- Infos Client -->
+      <div class="flex-direction-column">
+        <h4 class="title is-4 facture-title">Client</h4>
+        <span id="client-name"></span>
+        <span id="client-adress"></span>
+        <span id="client-city"></span>
+        <span id="client-email"></span>
+      </div>
+    </section>
+
+    <main>
       <!-- Date de Facturation -->
       <div class="facture-date">
         Facture n°<span id="invoice-number">Numero</span> - <span id="facture-month">Mois</span>
@@ -29,7 +28,7 @@
       </div>
 
       <!-- Tableau des Prestations -->
-      <table class="facture-table">
+      <table class="facture-table striped">
         <thead>
           <tr>
             <th>Prestation</th>
@@ -46,22 +45,21 @@
           </tr>
         </tfoot>
       </table>
-
       <!-- Footer de la Facture -->
       <div class="facture-footer">
-        <p>TVA non applicable art.293 B du CGI</p>
-        <div>
-          <p>IBAN :FR76 1610 6840 0696 0044 2209 882</p>
-          <p>BIC / SWIFT : AGRIFRPP361</p>
-          <p>Banque: Crédit Agricole</p>
+        <span>TVA non applicable art.293 B du CGI</span>
+        <div class="flex-direction-column">
+          <span>IBAN :FR76 1610 6840 0696 0044 2209 882</span>
+          <span>BIC / SWIFT : AGRIFRPP361</span>
+          <span>Banque: Crédit Agricole</span>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="footer-facture-button-container">
+    </main>
+  </article>
+  <footer>
     <button id="send-button" class="button is-success is-large" onclick="invoiceFormInteraction.sendEmail()">
       Envoyer la rançon
     </button>
     <button class="button is-large is-danger" onclick="closeModal()" type="button">revoir les termes</button>
-  </div>
-</div>
+  </footer>
+</dialog>

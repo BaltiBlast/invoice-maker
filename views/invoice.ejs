@@ -1,6 +1,6 @@
 <%- include('partials/head.ejs') %>
 
-<section>
+<main>
   <form id="invoiceForm">
     <input type="hidden" name="userEmail" value="<%= user.user_email %>" />
     <input type="hidden" name="userLastName" value="<%= user.user_last_name %>" />
@@ -9,81 +9,71 @@
     <input type="hidden" id="client-recordId" name="recordId" />
     <input type="hidden" id="actual-price" name="actuelPrice" />
 
-    <!-- Client -->
-    <div class="control columns is-3">
-      <div class="column field">
-        <label class="label">Client</label>
-        <div class="select is-fullwidth">
-          <select id="selectClient" name="clientEmail" required>
-            <option value=""></option>
-            <% if (clients) {%> <% clients.forEach(client => { %>
-            <option value="<%= client.client_email %>"><%= client.client_name %></option>
-            <% }) %><% } %>
-          </select>
-        </div>
-      </div>
+    <fieldset class="grid">
+      <!-- Client -->
+      <select id="selectClient" name="clientEmail" required>
+        <option selected disabled value="">Client</option>
+        <% if (clients) {%> <% clients.forEach(client => { %>
+        <option value="<%= client.client_email %>"><%= client.client_name %></option>
+        <% }) %><% } %>
+      </select>
 
       <!-- Mois de facturation -->
-      <div class="column field">
-        <label class="label">Mois de facturation</label>
-        <div class="select is-fullwidth">
-          <select id="selectMonth" name="invoiceMonth" required>
-            <option value=""></option>
-            <% months.forEach((month) => { %>
-            <option value="<%= month %>"><%= month %></option>
-            <% }); %>
-            <!-- Autres mois -->
-          </select>
-        </div>
-      </div>
+      <select id="selectMonth" name="invoiceMonth" required>
+        <option selected disabled value="">Mois</option>
+        <% months.forEach((month) => { %>
+        <option value="<%= month %>"><%= month %></option>
+        <% }); %>
+      </select>
 
       <!-- Numéro de facture -->
-      <div class="column field">
-        <label class="label">Numéro de facture</label>
-        <input id="inputInvoiceNumber" class="input" type="text" name="invoiceNumber" required />
-      </div>
-    </div>
+      <input id="inputInvoiceNumber" placeholder="N° Facture" type="text" name="invoiceNumber" required />
+
+      <!-- Générer facture -->
+      <button id="submitButton" type="button" onclick="showInvoicePreview()" disabled>Prévisualiser la facture</button>
+    </fieldset>
 
     <!-- Liste prestation -->
-    <table class="table is-fullwidth is-hoverable">
-      <thead>
-        <tr>
-          <th>Prestation</th>
-          <th>Prix</th>
-          <th>Nombre</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if (services) { %> <% services.forEach(service => { %>
-        <tr data-service-id="<%= service.service_id %>">
-          <td><%= service.service_name %></td>
-          <td><%= service.service_price %>€</td>
-          <td>
-            <input
-              class="input"
-              type="number"
-              name="services[<%= service.service_id %>][quantity]"
-              value="0"
-              min="0"
-              required
-            />
-            <input type="hidden" name="services[<%= service.service_id %>][name]" value="<%= service.service_name %>" />
-            <input
-              type="hidden"
-              name="services[<%= service.service_id %>][price]"
-              value="<%= service.service_price %>"
-            />
-          </td>
-        </tr>
-        <% }) %> <% } %>
-      </tbody>
-    </table>
-
+    <section>
+      <table class="striped">
+        <thead>
+          <tr>
+            <th>Prestation</th>
+            <th>Prix</th>
+            <th>Nombre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (services) { %> <% services.forEach(service => { %>
+          <tr data-service-id="<%= service.service_id %>">
+            <td><%= service.service_name %></td>
+            <td><%= service.service_price %>€</td>
+            <td>
+              <input
+                class="margin-none"
+                type="number"
+                name="services[<%= service.service_id %>][quantity]"
+                value="0"
+                min="0"
+                required
+              />
+              <input
+                type="hidden"
+                name="services[<%= service.service_id %>][name]"
+                value="<%= service.service_name %>"
+              />
+              <input
+                type="hidden"
+                name="services[<%= service.service_id %>][price]"
+                value="<%= service.service_price %>"
+              />
+            </td>
+          </tr>
+          <% }) %> <% } %>
+        </tbody>
+      </table>
+    </section>
     <%- include('modals/invoiceModal.ejs') %>
-
-    <button id="submitButton" class="button is-primary" type="button" onclick="showInvoicePreview()" disabled>
-      Prévisualiser la facture
-    </button>
   </form>
 
   <script>
@@ -91,6 +81,6 @@
   </script>
 
   <script src="/scripts/invoiceFormInteraction.js"></script>
-</section>
+</main>
 
 <%- include('partials/footer.ejs') %>

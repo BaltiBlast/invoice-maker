@@ -1,11 +1,27 @@
+/* ----------------------------------------------------------------------------------- */
+/* CSS VARIABLES */
 :root {
   --error-color: #d93526;
+  --white-color: #fff;
+  --pico-primary-color: #4b5320;
+}
+
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --pico-primary-background: var(--pico-primary-color);
+  --pico-primary-hover-background: #3f4518;
+  --pico-primary-hover-border: #3f4518;
+  --pico-primary-focus: #3f4518;
 }
 
 /* ----------------------------------------------------------------------------------- */
-/* MESSAGE COLOR CODE */
+/* COLORS */
 .error-message {
   color: var(--error-color);
+}
+
+.background-color-white {
+  background-color: var(--white-color);
 }
 
 /* ----------------------------------------------------------------------------------- */
@@ -17,18 +33,33 @@
 }
 
 /* ----------------------------------------------------------------------------------- */
-.max-view-height {
-  height: 100vh;
-}
-
-.full-height-prct {
-  height: 100%;
+/* FLEX */
+.flex-direction-column {
+  display: flex;
+  flex-direction: column;
 }
 
 .vert-center {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+/* ----------------------------------------------------------------------------------- */
+/* OVERWRITING PICO CSS */
+.margin-none {
+  margin: 0 !important;
+}
+
+/* ----------------------------------------------------------------------------------- */
+/* COLORS */
+
+.max-view-height {
+  height: 100vh;
+}
+
+.full-height-prct {
+  height: 100%;
 }
 
 .mar-bot {
@@ -67,24 +98,14 @@
 /* INVOICE PDF */
 
 .pdf-frame {
-  width: 21cm;
-  height: 29.7cm;
-}
-
-/* Dimensions du PDF en A4 : 21cm x 29.7cm */
-.facture-container {
-  width: 21cm;
-  min-height: 29.7cm;
-  margin: 0 auto;
-  padding: 0.5cm;
-  background-color: white;
-  color: #333;
   display: flex;
   flex-direction: column;
 }
 
-.facture-title {
-  color: #333;
+.facture-container {
+  min-width: 21cm;
+  min-height: 29.7cm;
+  font-size: initial;
 }
 
 /* Entête avec informations prestataire et client */
@@ -100,30 +121,13 @@
   text-align: center;
   font-size: 0.5cm;
   margin-bottom: 1cm;
-  color: #444;
-}
-
-/* Table de prestations */
-.facture-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 1cm;
-}
-
-.facture-table th,
-.facture-table td {
-  border: 0.05cm solid #ddd;
-  padding: 0.1cm;
 }
 
 .facture-table th {
-  background-color: #f2f2f2;
   font-weight: bold;
-  color: #555;
 }
 
 .facture-table tfoot th {
-  background-color: #f9f9f9;
   font-weight: bold;
 }
 
@@ -131,10 +135,7 @@
 .facture-footer {
   display: flex;
   justify-content: space-around;
-  margin-top: auto;
-  padding: 0.2cm;
   border-top: 0.05cm solid #ddd;
-  color: #666;
   font-size: 0.4cm;
 }
 
