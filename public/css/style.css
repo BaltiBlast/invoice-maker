@@ -1,4 +1,23 @@
-.full-height-vh {
+:root {
+  --error-color: #d93526;
+}
+
+/* ----------------------------------------------------------------------------------- */
+/* MESSAGE COLOR CODE */
+.error-message {
+  color: var(--error-color);
+}
+
+/* ----------------------------------------------------------------------------------- */
+/* TITLE */
+
+.big-title {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+/* ----------------------------------------------------------------------------------- */
+.max-view-height {
   height: 100vh;
 }
 
@@ -10,15 +29,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.navbar {
-  --bulma-navbar-item-img-max-height: 3.7rem;
-}
-
-.navbar__logo {
-  width: 90%;
-  height: auto;
 }
 
 .mar-bot {
@@ -44,11 +54,11 @@
 }
 
 .reset-link {
-  text-decoration: none; /* Enlève le soulignement */
-  color: inherit; /* Hérite de la couleur du texte parent */
-  background: none; /* Enlève le fond */
-  border: none; /* Enlève la bordure */
-  outline: none; /* Enlève l'effet de focus ou de surbrillance */
+  text-decoration: none;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
 }
 
 /* ----------------------------------------------------------------------------------- */
