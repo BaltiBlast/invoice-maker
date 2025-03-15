@@ -26,7 +26,6 @@
 
 /* ----------------------------------------------------------------------------------- */
 /* TITLE */
-
 .big-title {
   font-size: 3rem;
   font-weight: bold;
@@ -53,6 +52,36 @@
 
 /* ----------------------------------------------------------------------------------- */
 /* COLORS */
+
+.custom-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* EXACTEMENT 3 par ligne */
+  gap: 5%;
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .custom-grid {
+    grid-template-columns: repeat(2, 1fr); /* Passe à 2 colonnes sur écrans plus petits */
+  }
+}
+
+@media (max-width: 600px) {
+  .custom-grid {
+    grid-template-columns: 1fr; /* Une seule colonne sur petits écrans */
+  }
+}
+
+.client-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Permet d'aligner les boutons en bas */
+  padding: var(--spacing);
+  background: var(--card-background-color, #fff);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
 
 .max-view-height {
   height: 100vh;

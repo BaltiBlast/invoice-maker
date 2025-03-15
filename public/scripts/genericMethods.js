@@ -3,12 +3,12 @@ const genericMethods = {
 
   openModal: (recordId) => {
     const modal = document.getElementById(recordId);
-    modal.classList.add("is-active");
+    modal.showModal();
   },
 
   closeModal: (recordId) => {
     const modal = document.getElementById(recordId);
-    modal.classList.remove("is-active");
+    modal.close();
   },
 
   toggleDetails: (id) => {
