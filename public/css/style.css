@@ -113,6 +113,10 @@
   display: none;
 }
 
+.is-clickable {
+  cursor: pointer;
+}
+
 .reset-link {
   text-decoration: none;
   color: inherit;

@@ -1,7 +1,7 @@
 <%- include('partials/head.ejs') %>
 
-<section>
-  <table class="table is-fullwidth is-hoverable">
+<main>
+  <table>
     <thead>
       <tr>
         <th>Année</th>
@@ -18,13 +18,13 @@
         <td><%=el.invoice_year%></td>
         <td><%=el.totalIncome%>€</td>
         <td><%=el.totalURSSAF%>€</td>
-        <td><box-icon color="white" name="down-arrow-alt"></box-icon></td>
+        <td>⬇️</td>
       </tr>
 
       <!-- Détails de l'année -->
       <tr id="<%= el.invoice_year %>" class="is-hidden">
         <td colspan="4">
-          <table class="table is-bordered is-fullwidth">
+          <table class="striped">
             <thead>
               <tr>
                 <th>Mois</th>
@@ -48,6 +48,6 @@
       <% })} %>
     </tbody>
   </table>
-</section>
+</main>
 
 <%- include('partials/footer.ejs') %>
