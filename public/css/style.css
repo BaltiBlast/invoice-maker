@@ -62,21 +62,21 @@
 
 @media (max-width: 900px) {
   .custom-grid {
-    grid-template-columns: repeat(2, 1fr); /* Passe à 2 colonnes sur écrans plus petits */
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 600px) {
   .custom-grid {
-    grid-template-columns: 1fr; /* Une seule colonne sur petits écrans */
+    grid-template-columns: 1fr;
   }
 }
 
-.client-card {
+.card-display {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%; /* Permet d'aligner les boutons en bas */
+  height: 100%;
   padding: var(--spacing);
   background: var(--card-background-color, #fff);
   border-radius: var(--border-radius);

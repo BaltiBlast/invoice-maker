@@ -1,106 +1,75 @@
 <%- include('partials/head.ejs') %>
 
-<section>
-  <form class="mar-bot" action="/service-add" method="POST">
-    <div class="control columns is-3">
+<main>
+  <form action="/service-add" method="POST">
+    <section class="grid">
       <!-- PRESTATION -->
-      <div class="column field">
-        <label class="label">Préstation</label>
-        <input
-          class="input is-large"
-          type="text"
-          name="serviceName"
-          placeholder="Programme personnalisé, cours collectifs, etc..."
-          required
-        />
-      </div>
+      <label>
+        Préstation
+        <input type="text" name="serviceName" placeholder="Squats, Soulevé de terre, etc..." required />
+      </label>
 
       <!-- PRIX -->
-      <div class="column field">
-        <label class="label">Prix</label>
-        <input class="input is-large" type="number" name="servicePrice" placeholder="25" required />
-      </div>
-    </div>
+      <label>
+        Prix
+        <input type="number" name="servicePrice" placeholder="25" required />
+      </label>
+    </section>
 
-    <!-- BOUTON SUBMIT -->
-    <div class="field">
-      <div class="control">
-        <button class="button is-primary" type="submit">Ajouter préstation</button>
-      </div>
-    </div>
+    <button type="submit">Ajouter préstation</button>
   </form>
 
-  <div>
-    <h2 class="title is-4">Liste des préstations</h2>
-
+  <section class="grid custom-grid">
     <% if (services) { %> <% services.forEach(function(service) { %>
-    <form action="/service-delete" method="post" class="box is-flex is-justify-content-space-between">
-      <div>
-        <p class="is-flex">
-          <span class="icon mar-right"><box-icon color="white" name='dumbbell' ></box-icon></box-icon></span> <%= service.service_name
-          %>
-        </p>
-        <p class="is-flex">
-          <span class="icon mar-right"><box-icon color="white" name='euro' ></box-icon></box-icon></span> <%= service.service_price
-          %>
-        </p>
-      </div>
-      <!-- ADD INPUT WITH RECORD ID FOR DELETING HERE -->
-      <input type="hidden" name="recordId" value="<%= service.recordId %>" />
 
-      <div>
-        <button class="button is-primary" type="button" onclick="openModal('<%= service.recordId %>')">Modifier</button>
-        <button class="button is-danger" type="submit">X</button>
-      </div>
-    </form>
-
-    <div id="<%= service.recordId %>" class="modal">
-      <div class="modal-background"></div>
-      <form action="/service-update" method="POST">
-        <div class="control columns is-3">
-          <!-- PRESTATION -->
-          <div class="column field">
-            <label class="label">Préstation</label>
-            <input
-              class="input is-large"
-              type="text"
-              name="serviceName"
-              value="<%= service.service_name %>"
-              placeholder="Programme personnalisé, cours collectifs, etc..."
-              required
-            />
-          </div>
-
-          <!-- PRIX -->
-          <div class="column field">
-            <label class="label">Prix</label>
-            <input
-              class="input is-large"
-              type="number"
-              name="servicePrice"
-              value="<%= service.service_price %>"
-              placeholder="25"
-              required
-            />
-          </div>
-        </div>
-
+    <article>
+      <form action="/service-delete" method="post" class="card-display">
+        <section class="flex-direction-column">
+          <b><span>💪 <%= service.service_name %></span></b>
+          <span>💲 <%= service.service_price %></span>
+        </section>
+        <!-- ADD INPUT WITH RECORD ID FOR DELETING HERE -->
         <input type="hidden" name="recordId" value="<%= service.recordId %>" />
 
-        <!-- BOUTON SUBMIT -->
-        <div class="field">
-          <div class="control is-flex is-justify-content-space-between">
+        <section class="grid">
+          <button type="button" onclick="openModal('<%= service.service_id %>')">✏️</button>
+          <button type="submit">❌</button>
+        </section>
+      </form>
+    </article>
+
+    <dialog id="<%= service.service_id %>">
+      <article>
+        <form action="/service-update" method="POST">
+          <div class="control columns is-3">
+            <!-- PRESTATION -->
+            <label>
+              Préstation
+              <input type="text" name="serviceName" value="<%= service.service_name %>" required />
+            </label>
+
+            <!-- PRIX -->
+            <label>
+              Prix
+              <input type="number" name="servicePrice" value="<%= service.service_price %>" required />
+            </label>
+          </div>
+
+          <input type="hidden" name="recordId" value="<%= service.recordId %>" />
+
+          <!-- BOUTON SUBMIT -->
+          <section class="grid">
             <button class="button is-primary" type="submit">Mettre à jour</button>
-            <button class="button is-danger" type="button" onclick="closeModal('<%= service.recordId %>')">
+            <button class="button is-danger" type="button" onclick="closeModal('<%= service.service_id %>')">
               Annuler
             </button>
-          </div>
-        </div>
-      </form>
-    </div>
-    <!--  -->
+          </section>
+        </form>
+      </article>
+    </dialog>
+
     <% }); %> <% } %>
-  </div>
-</section>
+  </section>
+</main>
 
 <%- include('partials/footer.ejs') %>

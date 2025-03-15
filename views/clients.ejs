@@ -41,7 +41,7 @@
   <section class="grid custom-grid">
     <% if (clients) { %> <% clients.forEach(function(client) { %>
     <article>
-      <form class="client-card" action="/client-delete" method="post">
+      <form class="card-display" action="/client-delete" method="post">
         <section class="flex-direction-column">
           <b><span>👤 <%= client.client_name %></span></b>
           <span>🏠 <%= client.formattedAdress %></span>
