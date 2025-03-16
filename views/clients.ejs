@@ -37,77 +37,88 @@
     </section>
     <button type="submit">Ajouter client</button>
   </form>
+  <hr />
+  <section class="overflow-auto">
+    <% if (clients) { %>
+    <table class="striped">
+      <thead>
+        <tr>
+          <th>👤 Client</th>
+          <th>🏠 Adresse</th>
+          <th>✉️ Email</th>
+          <th>⚙️ Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% clients.forEach(function(client) { %>
+        <tr>
+          <td><%= client.client_name %></td>
+          <td><%= client.formattedAdress %></td>
+          <td><%= client.client_email %></td>
+          <td>
+            <form id="form-delete-client" action="/client-delete" method="post" class="grid">
+              <input type="hidden" name="recordId" value="<%= client.recordId %>" />
 
-  <section class="grid custom-grid">
-    <% if (clients) { %> <% clients.forEach(function(client) { %>
-    <article>
-      <form class="card-display" action="/client-delete" method="post">
-        <section class="flex-direction-column">
-          <b><span>👤 <%= client.client_name %></span></b>
-          <span>🏠 <%= client.formattedAdress %></span>
-          <span>✉️ <%= client.client_email %></span>
-          <span>💲 <%= client.client_total_payment %>€</span>
-        </section>
-        <!-- ADD INPUT WITH RECORD ID FOR DELETING HERE -->
-        <input type="hidden" name="recordId" value="<%= client.recordId %>" />
+              <span edit-client-id="<%= client.client_id %>" class="is-clickable">✏️</span>
+              <span id="span-delete-button-client" class="is-clickable">❌</span>
+            </form>
+          </td>
+        </tr>
 
-        <section class="grid">
-          <button type="button" onclick="openModal('<%= client.client_id %>')">✏️</button>
-          <button type="submit">❌</button>
-        </section>
-      </form>
-    </article>
+        <dialog id="<%= client.client_id %>">
+          <article>
+            <form action="/client-update" method="POST">
+              <section class="grid">
+                <!-- RAISON SOCIALE -->
+                <label>
+                  Entreprise ou Nom de famille
+                  <input type="text" name="clientName" value="<%= client.client_name %>" required />
+                </label>
 
-    <dialog id="<%= client.client_id %>">
-      <article>
-        <form action="/client-update" method="POST">
-          <section class="grid">
-            <!-- RAISON SOCIALE -->
-            <label>
-              Entreprise OU nom de famille
-              <input type="text" name="clientName" value="<%= client.client_name %>" required />
-            </label>
+                <!-- Email -->
+                <label>
+                  Email
+                  <input type="email" name="email" value="<%= client.client_email %>" required />
+                </label>
+              </section>
 
-            <!-- Email -->
-            <label>
-              Email
-              <input name="email" value="<%= client.client_email %>" required />
-            </label>
-          </section>
+              <!-- ADRESSE -->
+              <section class="grid">
+                <!-- RUE -->
+                <label>
+                  Adresse
+                  <input name="adress" value="<%= client.client_adress %>" required />
+                </label>
 
-          <!-- ADRESSE -->
-          <section class="grid">
-            <!-- RUE -->
-            <label>
-              Adresse
-              <input name="adress" value="<%= client.client_adress %>" required />
-            </label>
+                <!-- VILLE -->
+                <label>
+                  Ville
+                  <input name="city" value="<%= client.client_city_name %>" required />
+                </label>
 
-            <!-- VILLE -->
-            <label>
-              Ville
-              <input name="city" value="<%= client.client_city_name %>" required />
-            </label>
+                <!-- CODE POSTAL -->
+                <label>
+                  Code postal
+                  <input name="zipCode" value="<%= client.client_zip_code %>" required />
+                </label>
+              </section>
 
-            <!-- CODE POSTAL -->
-            <label>
-              Code postal
-              <input name="zipCode" value="<%= client.client_zip_code %>" required />
-            </label>
-          </section>
+              <input type="hidden" name="recordId" value="<%= client.recordId %>" />
 
-          <input type="hidden" name="recordId" value="<%= client.recordId %>" />
+              <section class="grid">
+                <button type="submit">Mettre à jour</button>
+                <button type="button" onclick="closeModal('<%= client.client_id %>')">Annuler</button>
+              </section>
+            </form>
+          </article>
+        </dialog>
 
-          <section class="grid">
-            <button type="submit">Mettre à jour</button>
-            <button type="button" onclick="closeModal('<%= client.client_id %>')">Annuler</button>
-          </section>
-        </form>
-      </article>
-    </dialog>
-
-    <% }); %> <% } %>
+        <% }); %>
+      </tbody>
+    </table>
+    <% } %>
   </section>
+  <script src="/scripts/clientFront.js"></script>
 </main>
 
 <%- include('partials/footer.ejs') %>

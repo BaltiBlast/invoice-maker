@@ -1,13 +1,13 @@
 const genericMethods = {
   initGenericMethods: () => {},
 
-  openModal: (recordId) => {
-    const modal = document.getElementById(recordId);
+  openModal: (id) => {
+    const modal = document.getElementById(id);
     modal.showModal();
   },
 
-  closeModal: (recordId) => {
-    const modal = document.getElementById(recordId);
+  closeModal: (id) => {
+    const modal = document.getElementById(id);
     modal.close();
   },
 
