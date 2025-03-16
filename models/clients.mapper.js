@@ -12,8 +12,8 @@ class ClientsMapper extends CoreMapper {
       })
       .all();
 
-    const { fields } = records[0];
-    return { ...fields };
+    const { fields: client, id: recordId } = records[0];
+    return { ...client, recordId };
   }
 
   // ------------------------------------------------------------------------------------ //

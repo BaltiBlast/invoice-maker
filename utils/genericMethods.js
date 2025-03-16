@@ -4,7 +4,7 @@ const genericMethods = {
     return formattedAddress;
   },
 
-  allMonths: [
+  months: [
     "Janvier",
     "Février",
     "Mars",

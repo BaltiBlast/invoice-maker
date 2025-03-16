@@ -1,4 +1,3 @@
-const clients = window.clientsData;
 const selectClient = document.getElementById("selectClient");
 const selectMonth = document.getElementById("selectMonth");
 const invoiceForm = document.getElementById("invoiceForm");
@@ -11,6 +10,8 @@ const yearElement = document.getElementById("facture-year");
 const invoiceToSend = document.getElementById("invoiceToSend");
 const invoiceNumber = document.getElementById("invoice-number");
 const inputInvoiceNumber = document.getElementById("inputInvoiceNumber");
+
+let selectedClient = null;
 
 const invoiceFormInteraction = {
   init: () => {
@@ -25,17 +26,21 @@ const invoiceFormInteraction = {
     closeModal();
   },
 
+  getClientDataById: async (clientId) => {
+    const response = await fetch(`/client/${clientId}`);
+    const data = await response.json();
+    selectedClient = data;
+  },
+
   setClientData: () => {
-    selectClient.addEventListener("change", function (element) {
-      const selectedClient = clients.find((client) => client.client_email == element.target.value);
+    selectClient.addEventListener("change", async (element) => {
+      const clientId = element.target.value;
+      await getClientDataById(clientId);
 
       if (selectedClient) {
         document.getElementById("client-name").textContent = selectedClient.client_name;
         document.getElementById("client-adress").textContent = selectedClient.client_adress;
         document.getElementById("client-email").textContent = selectedClient.client_email;
-        document.getElementById("client-recordId").value = selectedClient.recordId;
-        document.getElementById("actual-price").value = selectedClient.client_total_payment;
-        document.getElementById("client-id").value = selectedClient.client_id;
 
         const formatedAdress = `${selectedClient.client_city_name} - ${selectedClient.client_zip_code}`;
         document.getElementById("client-city").textContent = formatedAdress;
@@ -182,10 +187,10 @@ const invoiceFormInteraction = {
       const formData = new FormData(invoiceForm);
       const formValues = Object.fromEntries(formData.entries());
 
-      const { clientEmail, userLastName, userFirstName, userEmail, recordId, actuelPrice, clientId } = formValues;
-      console.log("FORM VALUES", formValues);
+      const { userLastName, userFirstName, userEmail } = formValues;
+      const { client_email, client_id, client_total_payment, recordId } = selectedClient;
 
-      const newTotalPrice = (parseFloat(actuelPrice) + parseFloat(totalPrice.textContent)).toString();
+      const newTotalPrice = (parseFloat(client_total_payment) + parseFloat(totalPrice.textContent)).toString();
 
       const formatedDate = `${invoiceMonth.textContent} ${yearElement.textContent}`;
 
@@ -195,13 +200,13 @@ const invoiceFormInteraction = {
         invoiceMonth: invoiceMonth.textContent,
         invoiceYear: yearElement.textContent,
         invoiceIncome: totalPrice.textContent,
-        invoiceClient: clientEmail,
-        invoiceClientId: clientId,
+        invoiceClient: client_email,
+        invoiceClientId: client_id,
       };
 
       const data = {
         pdfInvoice: pdfInvoice,
-        clientEmail: clientEmail,
+        clientEmail: client_email,
         newTotalPrice: newTotalPrice.toString(),
         recordId: recordId,
         userName: fullNames,
@@ -274,6 +279,7 @@ const {
   isClientSelected,
   isInvoiceNumberEmpty,
   generatePDF,
+  getClientDataById,
 } = invoiceFormInteraction;
 
 document.addEventListener("DOMContentLoaded", invoiceFormInteraction.init());
