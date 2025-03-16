@@ -17,7 +17,7 @@ const { getInvoice, postSendInvoiceEmail } = invoiceControllers;
 
 // -- clients
 const clientsController = require("./controllers/clients/clientsController");
-const { getClients, postClientAdd, postClientsDelete, postClientUpdate } = clientsController;
+const { getClients, getClientById, postClientAdd, postClientsDelete, postClientUpdate } = clientsController;
 
 // -- general
 const generalControllers = require("./controllers/general/generalControllers");
@@ -46,6 +46,7 @@ router.post("/invoice-send-email", ensureAuthenticated, postSendInvoiceEmail);
 
 // CONTACTS ROUTES
 router.get("/clients", ensureAuthenticated, getClients);
+router.get("/client/:id", ensureAuthenticated, getClientById);
 router.post("/client-add", ensureAuthenticated, postClientAdd);
 router.post("/client-update", ensureAuthenticated, postClientUpdate);
 router.post("/client-delete", ensureAuthenticated, postClientsDelete);

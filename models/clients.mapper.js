@@ -5,6 +5,17 @@ const CoreMapper = require("./core.mapper");
 class ClientsMapper extends CoreMapper {
   tableName = "clients";
 
+  async getClientById(clientId) {
+    const records = await this.db(this.tableName)
+      .select({
+        filterByFormula: `{client_id} = '${clientId}'`,
+      })
+      .all();
+
+    const { fields } = records[0];
+    return { ...fields };
+  }
+
   // ------------------------------------------------------------------------------------ //
   // Mapper to get clients data
   async getClients() {

@@ -24,6 +24,18 @@ const clientsController = {
   },
 
   // ------------------------------------------------------------------------------------ //
+  // Method to get client's data by his id
+  getClientById: async (req, res) => {
+    try {
+      const clientId = req.params.id;
+      const dataClient = await ClientsMapper.getClientById(clientId);
+      return res.json(dataClient);
+    } catch (error) {
+      console.error("[ERROR getClientById in clientsController.js] :", error);
+    }
+  },
+
+  // ------------------------------------------------------------------------------------ //
   // Method to create a new client
   postClientAdd: async (req, res) => {
     try {
