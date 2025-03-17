@@ -5,7 +5,7 @@ const { ensureAuthenticated } = require("./utils/middleware");
 // CONTROLLERS
 // -- auth
 const authControllers = require("./controllers/auth/authControllers");
-const { getSignin, postSignin, getDisconnect } = authControllers;
+const { getSignin, postSignin, postSignup, getDisconnect } = authControllers;
 
 // -- user
 const userControllers = require("./controllers/user/profileControllers");
@@ -34,6 +34,7 @@ const { getSummary } = summaryControllers;
 // AUTH ROUTES
 router.get("/signin", getSignin);
 router.post("/signin", postSignin);
+router.post("/signup", postSignup);
 router.get("/signout", ensureAuthenticated, getDisconnect);
 
 // PROFILE ROUTES

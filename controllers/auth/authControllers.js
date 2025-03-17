@@ -14,9 +14,9 @@ const authControllers = {
   // Method to sign in a user
   postSignin: async (req, res) => {
     try {
-      const { password } = req.body;
+      const { email, password } = req.body;
 
-      const user = await UserMapper.getUser();
+      const user = await UserMapper.getUserByEmail(email);
       const hashedPassword = user.password;
       const isPasswordMatch = await bcrypt.compare(password, hashedPassword);
 
@@ -29,6 +29,20 @@ const authControllers = {
       res.redirect("/invoice");
     } catch (error) {
       console.error("[ERROR postSignin in authControllers.js] :", error);
+    }
+  },
+
+  // ------------------------------------------------------------------------------------ //
+  // Method to display the sign up page
+  postSignup: async (req, res) => {
+    try {
+      const { lastName, firstName, email, password } = req.body;
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await UserMapper.createUser({ lastName, firstName, email, password: hashedPassword });
+      res.redirect("/signin");
+    } catch (error) {
+      console.error("[ERROR postSignup in authControllers.js] :", error);
     }
   },
 

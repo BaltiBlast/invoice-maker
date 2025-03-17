@@ -9,6 +9,8 @@ const invoiceControllers = {
   // Method to display the invoice page
   getInvoice: async (req, res) => {
     try {
+      const userId = req.session.user.user_id;
+
       // Get clients data and formating it
       const clients = await ClientsMapper.getClients();
       const clientsData = clients.map((client) => {
@@ -17,7 +19,7 @@ const invoiceControllers = {
       });
 
       // Get user data and formating it
-      const user = await UserMapper.getUser();
+      const user = await UserMapper.getUserById(userId);
       const { user_email, user_last_name, user_first_name, user_adress, user_city_name, user_zip_code } = user;
       const userData = { user_email, user_last_name, user_first_name, user_adress, user_city_name, user_zip_code };
 
