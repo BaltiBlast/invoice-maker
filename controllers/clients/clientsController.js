@@ -8,7 +8,8 @@ const clientsController = {
   // Method to display the clients page
   getClients: async (req, res) => {
     try {
-      const clients = await ClientsMapper.getClients();
+      const userId = req.session.user.user_id;
+      const clients = await ClientsMapper.getUserClients(userId);
 
       // Format the adress of each client
       const formattedClients = clients.map((client) => {
@@ -17,7 +18,7 @@ const clientsController = {
         return { ...client, formattedAdress };
       });
 
-      res.render("clients", { showNavbar: true, clients: formattedClients });
+      res.render("clients", { showNavbar: true, clients: formattedClients, userId });
     } catch (error) {
       console.error("[ERROR getClients in clientsController.js] :", error);
     }

@@ -12,7 +12,7 @@ const invoiceControllers = {
       const userId = req.session.user.user_id;
 
       // Get clients data and formating it
-      const clients = await ClientsMapper.getClients();
+      const clients = await ClientsMapper.getUserClients(userId);
       const clientsData = clients.map((client) => {
         const { client_name, client_id } = client;
         return { client_name, client_id };
@@ -24,7 +24,7 @@ const invoiceControllers = {
       const userData = { user_email, user_last_name, user_first_name, user_adress, user_city_name, user_zip_code };
 
       // Get services
-      const services = await ServicesMapper.getServices();
+      const services = await ServicesMapper.getUserServices(userId);
 
       res.render("invoice", { showNavbar: true, clientsData, userData, services, months });
     } catch (error) {

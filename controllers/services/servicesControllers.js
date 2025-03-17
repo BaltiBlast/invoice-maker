@@ -7,8 +7,9 @@ const servicesControllers = {
   // Method to display the services page
   getServices: async (req, res) => {
     try {
-      const services = await ServicesMapper.getServices();
-      res.render("services", { showNavbar: true, services });
+      const userId = req.session.user.user_id;
+      const services = await ServicesMapper.getUserServices(userId);
+      res.render("services", { showNavbar: true, services, userId });
     } catch (error) {
       console.error("[ERROR getServices in servicesControllers.js] :", error);
     }

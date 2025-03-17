@@ -18,8 +18,12 @@ class ClientsMapper extends CoreMapper {
 
   // ------------------------------------------------------------------------------------ //
   // Mapper to get clients data
-  async getClients() {
-    const records = await this.db(this.tableName).select().all();
+  async getUserClients(userId) {
+    const records = await this.db(this.tableName)
+      .select({
+        filterByFormula: `{user_id} = '${userId}'`,
+      })
+      .all();
 
     return records.map((record) => {
       const { id: recordId, fields: client } = record;
@@ -31,7 +35,7 @@ class ClientsMapper extends CoreMapper {
   // ------------------------------------------------------------------------------------ //
   // Mapper to create a new client
   async createClient(data) {
-    const { clientName, email, adress, city, zipCode } = data;
+    const { clientName, email, adress, city, zipCode, userId } = data;
 
     await this.db(this.tableName).create([
       {
@@ -42,6 +46,7 @@ class ClientsMapper extends CoreMapper {
           client_city_name: city,
           client_zip_code: zipCode,
           client_total_payment: "0",
+          user_id: userId,
         },
       },
     ]);
