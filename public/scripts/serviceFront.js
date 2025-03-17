@@ -19,7 +19,7 @@ const serviceFront = {
 
     spanDeleteButtons.forEach((span) => {
       span.addEventListener("click", () => {
-        const form = this.closest("form");
+        const form = span.closest("form");
         form.submit();
       });
     });
