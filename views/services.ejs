@@ -18,58 +18,69 @@
 
     <button type="submit">Ajouter préstation</button>
   </form>
+  <hr />
+  <section class="overflow-auto">
+    <% if (services) { %>
 
-  <section class="grid custom-grid">
-    <% if (services) { %> <% services.forEach(function(service) { %>
+    <table class="striped">
+      <thead>
+        <tr>
+          <th>💪 Préstation</th>
+          <th>💲 Prix</th>
+          <th>⚙️ Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% services.forEach(function(service) { %>
+        <tr>
+          <td><%= service.service_name %></td>
+          <td><%= service.service_price %></td>
+          <td>
+            <form id="form-delete-service" action="/service-delete" method="post" class="grid">
+              <input type="hidden" name="recordId" value="<%= service.recordId %>" />
+              <span edit-service-id="<%= service.service_id %>" class="is-clickable">✏️</span>
+              <span delete-service-id="<%= service.service_id %>" id="span-delete-button-service" class="is-clickable"
+                >❌</span
+              >
+            </form>
+          </td>
+        </tr>
+        <dialog id="<%= service.service_id %>">
+          <article>
+            <form action="/service-update" method="POST">
+              <div class="control columns is-3">
+                <!-- PRESTATION -->
+                <label>
+                  Préstation
+                  <input type="text" name="serviceName" value="<%= service.service_name %>" required />
+                </label>
 
-    <article>
-      <form action="/service-delete" method="post" class="card-display">
-        <section class="flex-direction-column">
-          <b><span>💪 <%= service.service_name %></span></b>
-          <span>💲 <%= service.service_price %></span>
-        </section>
-        <!-- ADD INPUT WITH RECORD ID FOR DELETING HERE -->
-        <input type="hidden" name="recordId" value="<%= service.recordId %>" />
+                <!-- PRIX -->
+                <label>
+                  Prix
+                  <input type="number" name="servicePrice" value="<%= service.service_price %>" required />
+                </label>
+              </div>
 
-        <section class="grid">
-          <button type="button" onclick="openModal('<%= service.service_id %>')">✏️</button>
-          <button type="submit">❌</button>
-        </section>
-      </form>
-    </article>
+              <input type="hidden" name="recordId" value="<%= service.recordId %>" />
 
-    <dialog id="<%= service.service_id %>">
-      <article>
-        <form action="/service-update" method="POST">
-          <div class="control columns is-3">
-            <!-- PRESTATION -->
-            <label>
-              Préstation
-              <input type="text" name="serviceName" value="<%= service.service_name %>" required />
-            </label>
+              <!-- BOUTON SUBMIT -->
+              <section class="grid">
+                <button class="button is-primary" type="submit">Mettre à jour</button>
+                <button class="button is-danger" type="button" onclick="closeModal('<%= service.service_id %>')">
+                  Annuler
+                </button>
+              </section>
+            </form>
+          </article>
+        </dialog>
+        <% }); %>
+      </tbody>
+    </table>
 
-            <!-- PRIX -->
-            <label>
-              Prix
-              <input type="number" name="servicePrice" value="<%= service.service_price %>" required />
-            </label>
-          </div>
-
-          <input type="hidden" name="recordId" value="<%= service.recordId %>" />
-
-          <!-- BOUTON SUBMIT -->
-          <section class="grid">
-            <button class="button is-primary" type="submit">Mettre à jour</button>
-            <button class="button is-danger" type="button" onclick="closeModal('<%= service.service_id %>')">
-              Annuler
-            </button>
-          </section>
-        </form>
-      </article>
-    </dialog>
-
-    <% }); %> <% } %>
+    <% } %>
   </section>
+  <script src="/scripts/serviceFront.js"></script>
 </main>
 
 <%- include('partials/footer.ejs') %>

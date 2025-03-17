@@ -1,14 +1,13 @@
 const clientFront = {
   init: () => {
-    getAllEditButtons();
+    getClientEditButtons();
     formSubmitDeleteClient();
   },
 
-  getAllEditButtons: () => {
+  getClientEditButtons: () => {
     const spanEditButtons = document.querySelectorAll("span[edit-client-id]");
-
     spanEditButtons.forEach((span) => {
-      span.addEventListener("click", function () {
+      span.addEventListener("click", () => {
         const clientId = span.getAttribute("edit-client-id");
         openModal(clientId);
       });
@@ -16,14 +15,16 @@ const clientFront = {
   },
 
   formSubmitDeleteClient: () => {
-    const spanDeleteButton = document.getElementById("span-delete-button-client");
-    const deleteClientForm = document.getElementById("form-delete-client");
-    spanDeleteButton.addEventListener("click", function () {
-      deleteClientForm.submit();
+    const spanDeleteButtons = document.querySelectorAll("[delete-client-id]");
+    spanDeleteButtons.forEach((span) => {
+      span.addEventListener("click", () => {
+        const form = this.closest("form");
+        form.submit();
+      });
     });
   },
 };
 
-const { getAllEditButtons, formSubmitDeleteClient } = clientFront;
+const { getClientEditButtons, formSubmitDeleteClient } = clientFront;
 
 document.addEventListener("DOMContentLoaded", clientFront.init());
