@@ -44,13 +44,13 @@ const invoiceControllers = {
       const invoiceBuffer = Buffer.from(invoiceBase64, "base64");
 
       const mailOptions = {
-        from: appEmail,
+        from: `"${userName}" <${appEmail}>`,
         to: clientEmail,
-        subject: `${userName} - Facture du mois de ${date}`,
+        subject: `Facture ${date}`,
         text: `Bonjour, voici la facture pour ${date}, bonne réception !`,
         attachments: [
           {
-            filename: `facture ${userName} ${date}.pdf`,
+            filename: `facture ${date} ${userName}.pdf`,
             content: invoiceBuffer,
             contentType: "application/pdf",
           },
