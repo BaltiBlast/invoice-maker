@@ -2,6 +2,7 @@
 const { ClientsMapper, ServicesMapper, UserMapper, InvoicesMapper } = require("../../models/index.mapper");
 const { months } = require("../../utils/genericMethods");
 const transporter = require("../../configs/nodemailer");
+require("dotenv").config();
 
 // ===== CONTROLLERS ===== //
 const invoiceControllers = {
@@ -36,15 +37,16 @@ const invoiceControllers = {
   // Method to send the invoice by email
   postSendInvoiceEmail: async (req, res) => {
     try {
-      const { pdfInvoice, clientEmail, userEmail, date, userName, recordId, newTotalPrice, invoiceDbData } = req.body;
+      const { pdfInvoice, clientEmail, date, userName, recordId, newTotalPrice, invoiceDbData } = req.body;
+      const appEmail = process.env.GOOGLE_APP_EMAIL;
 
       const invoiceBase64 = pdfInvoice.split(",")[1];
       const invoiceBuffer = Buffer.from(invoiceBase64, "base64");
 
       const mailOptions = {
-        from: userEmail,
+        from: appEmail,
         to: clientEmail,
-        subject: `Facture pour le mois de ${date}`,
+        subject: `${userName} - Facture du mois de ${date}`,
         text: `Bonjour, voici la facture pour ${date}, bonne réception !`,
         attachments: [
           {
