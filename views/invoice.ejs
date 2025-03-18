@@ -30,8 +30,15 @@
       <button id="submitButton" type="button" onclick="showInvoicePreview()" disabled>Prévisualiser la facture</button>
     </fieldset>
 
+    <nav>
+      <ul>
+        <li><span data-tab="invoiceTab" class="tab-button active-tab">Facturation</span></li>
+        <li><span data-tab="invoiceHistoryTab" class="tab-button">Historique</span></li>
+      </ul>
+    </nav>
+    <hr />
     <!-- Liste prestation -->
-    <section>
+    <section id="invoiceTab" class="tab-content active">
       <table class="striped">
         <thead>
           <tr>
@@ -70,10 +77,16 @@
         </tbody>
       </table>
     </section>
+
+    <!-- Historique des factures -->
+    <section id="invoiceHistoryTab" class="tab-content">
+      <h2>Historique des factures</h2>
+    </section>
+
     <%- include('modals/invoiceModal.ejs') %>
   </form>
 
-  <script src="/scripts/invoiceFormInteraction.js"></script>
+  <script src="/scripts/invoiceFront.js"></script>
 </main>
 
 <%- include('partials/footer.ejs') %>

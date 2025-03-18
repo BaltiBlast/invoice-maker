@@ -22,16 +22,19 @@ const invoiceFormInteraction = {
     isClientSelected();
     isMonthSelected();
     isInvoiceNumberEmpty();
-    showInvoicePreview();
-    closeModal();
+    invoiceTabManagement();
   },
 
+  // ------------------------------------------------------------------------------------ //
+  // Get the client data by its ID
   getClientDataById: async (clientId) => {
     const response = await fetch(`/client/${clientId}`);
     const data = await response.json();
     selectedClient = data;
   },
 
+  // ------------------------------------------------------------------------------------ //
+  // Set the client data in the invoice preview
   setClientData: () => {
     selectClient.addEventListener("change", async (element) => {
       const clientId = element.target.value;
@@ -53,6 +56,8 @@ const invoiceFormInteraction = {
     });
   },
 
+  // ------------------------------------------------------------------------------------ //
+  // Set the invoice date in the invoice preview
   setInvoiceDate: () => {
     selectMonth.addEventListener("change", function (element) {
       const selectedMonth = element.target.value;
@@ -66,6 +71,8 @@ const invoiceFormInteraction = {
     });
   },
 
+  // ------------------------------------------------------------------------------------ //
+  // Set the invoice number in the invoice preview
   setInvoiceNumber: () => {
     inputInvoiceNumber.addEventListener("change", function (element) {
       const invoiceNumberValue = element.target.value;
@@ -77,6 +84,8 @@ const invoiceFormInteraction = {
     });
   },
 
+  // ------------------------------------------------------------------------------------ //
+  // Set the invoice number in the invoice preview
   setPrice: () => {
     submitButton.addEventListener("click", function () {
       prestationPrice.innerHTML = "";
@@ -134,6 +143,8 @@ const invoiceFormInteraction = {
     });
   },
 
+  // ------------------------------------------------------------------------------------ //
+  // Disable button to generate invoice if form is not valid
   checkFormValidity: () => {
     const isClientSelected = selectClient.value !== "";
     const isMonthSelected = selectMonth.value !== "";
@@ -141,18 +152,26 @@ const invoiceFormInteraction = {
     submitButton.disabled = !(isClientSelected && isMonthSelected && isInvoiceNumberEmpty);
   },
 
+  // ------------------------------------------------------------------------------------ //
+  // Check if input invoice number is empty
   isInvoiceNumberEmpty: () => {
     inputInvoiceNumber.addEventListener("input", checkFormValidity);
   },
 
+  // ------------------------------------------------------------------------------------ //
+  // Check if input client is selected
   isClientSelected: () => {
     selectClient.addEventListener("change", checkFormValidity);
   },
 
+  // ------------------------------------------------------------------------------------ //
+  // Check if input month is selected
   isMonthSelected: () => {
     selectMonth.addEventListener("change", checkFormValidity);
   },
 
+  // ------------------------------------------------------------------------------------ //
+  // Show invoice preview
   generatePDF: async () => {
     const invoiceToSend = document.getElementById("invoiceToSend");
     const { jsPDF } = window.jspdf;
@@ -178,6 +197,8 @@ const invoiceFormInteraction = {
     });
   },
 
+  // ------------------------------------------------------------------------------------ //
+  // Send invoice by email
   sendEmail: () => {
     invoiceForm.addEventListener("submit", async function (event) {
       event.preventDefault();
@@ -258,12 +279,34 @@ const invoiceFormInteraction = {
     });
   },
 
-  showInvoicePreview: () => {
-    document.getElementById("invoiceModal").showModal();
+  // ------------------------------------------------------------------------------------ //
+  // Tab management
+  invoiceTabManagement() {
+    document.querySelectorAll(".tab-button").forEach((tab) => {
+      tab.addEventListener("click", switchTab.bind(this));
+    });
   },
 
-  closeModal: () => {
-    document.getElementById("invoiceModal").close();
+  // ------------------------------------------------------------------------------------ //
+  // Tab switch
+  switchTab(event) {
+    const selectedTab = event.currentTarget;
+    deactivateTabs();
+    activateTab(selectedTab);
+  },
+
+  // ------------------------------------------------------------------------------------ //
+  // Tab deactivation
+  deactivateTabs() {
+    document.querySelectorAll(".tab-button").forEach((tab) => tab.classList.remove("active-tab"));
+    document.querySelectorAll(".tab-content").forEach((content) => content.classList.remove("active"));
+  },
+
+  // ------------------------------------------------------------------------------------ //
+  // Tab activation
+  activateTab(tab) {
+    tab.classList.add("active-tab");
+    document.getElementById(tab.dataset.tab).classList.add("active");
   },
 };
 
@@ -273,13 +316,15 @@ const {
   setInvoiceDate,
   setInvoiceNumber,
   checkFormValidity,
-  showInvoicePreview,
-  closeModal,
   isMonthSelected,
   isClientSelected,
   isInvoiceNumberEmpty,
   generatePDF,
   getClientDataById,
+  switchTab,
+  activateTab,
+  deactivateTabs,
+  invoiceTabManagement,
 } = invoiceFormInteraction;
 
 document.addEventListener("DOMContentLoaded", invoiceFormInteraction.init());
