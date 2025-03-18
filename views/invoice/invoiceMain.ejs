@@ -1,0 +1,23 @@
+<%- include('../partials/head.ejs') %>
+
+<main>
+  <form id="invoiceForm">
+    <!-- Invoice Form -->
+    <%- include('invoiceForm.ejs') %>
+
+    <hr />
+
+    <!-- Services -->
+    <%- include('invoiceServicesTab.ejs') %>
+
+    <!-- Invoice history -->
+    <%- include('invoiceHistoryTab.ejs') %>
+
+    <!-- Modal used to preview invoice -->
+    <%- include('../modals/invoiceModal.ejs') %>
+  </form>
+
+  <script src="/scripts/invoiceFront.js"></script>
+</main>
+
+<%- include('../partials/footer.ejs') %>

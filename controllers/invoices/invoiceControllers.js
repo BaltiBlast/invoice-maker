@@ -27,7 +27,7 @@ const invoiceControllers = {
       // Get services
       const services = await ServicesMapper.getUserServices(userId);
 
-      res.render("invoice", { showNavbar: true, clientsData, userData, services, months });
+      res.render("invoice/invoiceMain", { showNavbar: true, clientsData, userData, services, months });
     } catch (error) {
       console.error("[ERROR getInvoice in invoiceControllers.js] :", error);
     }

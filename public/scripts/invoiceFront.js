@@ -23,6 +23,8 @@ const invoiceFormInteraction = {
     isMonthSelected();
     isInvoiceNumberEmpty();
     invoiceTabManagement();
+    showInvoicePreview();
+    closeInvoicePreview();
   },
 
   // ------------------------------------------------------------------------------------ //
@@ -141,6 +143,18 @@ const invoiceFormInteraction = {
 
       totalPrice.textContent = totalPriceServices;
     });
+  },
+
+  // ------------------------------------------------------------------------------------ //
+  // Show invoice preview
+  showInvoicePreview: () => {
+    document.getElementById("invoiceModal").showModal();
+  },
+
+  // ------------------------------------------------------------------------------------ //
+  // Disable button to generate invoice if form is not valid
+  closeInvoicePreview: () => {
+    document.getElementById("invoiceModal").close();
   },
 
   // ------------------------------------------------------------------------------------ //
@@ -325,6 +339,8 @@ const {
   activateTab,
   deactivateTabs,
   invoiceTabManagement,
+  showInvoicePreview,
+  closeInvoicePreview,
 } = invoiceFormInteraction;
 
 document.addEventListener("DOMContentLoaded", invoiceFormInteraction.init());

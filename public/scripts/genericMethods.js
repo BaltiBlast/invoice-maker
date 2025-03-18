@@ -11,7 +11,7 @@ const genericMethods = {
     modal.close();
   },
 
-  toggleDetails: (id) => {
+  showInvoicePreview: (id) => {
     const detailsRow = document.getElementById(id);
     if (detailsRow) {
       detailsRow.classList.toggle("is-hidden");
