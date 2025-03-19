@@ -61,7 +61,7 @@
         "backgroundColor": "",
         "opacity": 1,
         "fontName": "",
-        "name": "userData",
+        "name": "userInformations",
         "readOnly": false
       },
       {
@@ -103,10 +103,10 @@
         "opacity": 1,
         "readOnly": false,
         "fontName": "",
-        "name": "clientData"
+        "name": "clientInformations"
       },
       {
-        "name": "servicesData",
+        "name": "servicesInformation",
         "type": "table",
         "position": { "x": 20, "y": 84.47 },
         "width": 170,

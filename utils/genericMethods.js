@@ -18,6 +18,13 @@ const genericMethods = {
     "Novembre",
     "Décembre",
   ],
+
+  // ------------------------------------------------------------------------------------ //
+  // Return a string with the user full name
+  userFullName: (userData) => {
+    const { user_first_name, user_last_name } = userData;
+    return `${user_first_name} ${user_last_name}`;
+  },
 };
 
 module.exports = genericMethods;

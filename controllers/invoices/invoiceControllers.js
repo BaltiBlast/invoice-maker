@@ -1,11 +1,18 @@
 // ===== IMPORTS ===== //
-const { generate } = require("@pdfme/generator");
-const { text, table, line } = require("@pdfme/schemas");
-require("dotenv").config();
+// Models
 const { ClientsMapper, ServicesMapper, UserMapper } = require("../../models/index.mapper");
-const { months } = require("../../utils/genericMethods");
-const transporter = require("../../configs/nodemailer");
-const template = require("../../utils/templates/invoiceTemplate.json");
+
+// Utils
+const { months, userFullName } = require("../../utils/genericMethods");
+
+// Controller's methods
+const {
+  formatingInvoiceServices,
+  formatingInvoiceUserInformations,
+  formatingInvoiceClientData,
+  invoicePdfGenerator,
+  sendInvoiceEmail,
+} = require("./invoiceControllersMethods");
 
 // ===== CONTROLLERS ===== //
 const invoiceControllers = {
@@ -44,29 +51,20 @@ const invoiceControllers = {
 
       // Get client's informations + destructure them
       const client = await ClientsMapper.getClientById(clientId);
-      const { client_name, client_adress, client_zip_code, client_city_name, client_email } = client;
+      const { client_email } = client;
 
       // Get user's informations + destructure them
-      const user = req.session.user;
-      const { user_last_name, user_first_name, user_adress, user_city_name, user_zip_code, user_email } = user;
+      const userData = req.session.user;
 
       // Get services informations + formating them
-      const services = await Promise.all(
-        servicesData.map(async (service) => {
-          const { serviceId, serviceQuantity } = service;
-          const serviceData = await ServicesMapper.getServiceById(serviceId);
-          const { service_name, service_price } = serviceData[0];
-          const totalPrice = serviceQuantity * service_price;
-          return [service_name, serviceQuantity.toString(), service_price, totalPrice.toString()];
-        })
-      );
+      const servicesInformation = await formatingInvoiceServices(servicesData);
 
       //  User informations for the invoice
-      const userData = `${user_first_name} ${user_last_name}\n${user_adress}\n${user_zip_code} ${user_city_name}\n${user_email}`;
-      const userFullName = `${user_first_name} ${user_last_name}`;
+      const userInformations = formatingInvoiceUserInformations(userData);
+      const userName = userFullName(userData);
 
       // Client informations for the invoice
-      const clientData = `${client_name}\n${client_adress}\n${client_city_name} - ${client_zip_code}\n${client_email}`;
+      const clientInformations = formatingInvoiceClientData(client);
 
       // Date for the invoice
       const invoiceYear = new Date().getFullYear();
@@ -79,43 +77,27 @@ const invoiceControllers = {
       const invoiceTitle = `Facture n°${invoiceNumber} - ${invoiceDate}`;
 
       // Invoice total service price
-      const totalPrice = services.reduce((sum, service) => sum + Number(service.at(-1)), 0);
+      const totalPrice = servicesInformation.reduce((sum, service) => sum + Number(service.at(-1)), 0);
 
       // Dynamic invoice data
       const inputs = [
         {
           invoiceTitle: invoiceTitle,
-          userData: userData,
-          clientData: clientData,
-          servicesData: services,
+          userInformations: userInformations,
+          clientInformations: clientInformations,
+          servicesInformation: servicesInformation,
           totalPrice: totalPrice.toString(),
           paymentData: `Crédit Agricole\nIBAN : FR76 0000 0000 0000 0000 0000 000\nBIC / SWIFT : AGRIFRPP361`,
         },
       ];
 
       // Invoice pdf generation
-      const pdf = await generate({
-        template,
-        inputs,
-        plugins: { Table: table, Text: text, Line: line },
-      });
+      const invoiceGenerated = await invoicePdfGenerator(inputs);
 
-      const appEmail = process.env.GOOGLE_APP_EMAIL;
-      const mailOptions = {
-        from: `"${userFullName}" <${appEmail}>`,
-        to: client_email,
-        subject: `Facture ${invoiceDate}`,
-        text: `Bonjour, voici la facture pour ${invoiceDate}, bonne réception !`,
-        attachments: [
-          {
-            filename: `${invoiceTitle}.pdf`,
-            content: pdf,
-            contentType: "application/pdf",
-          },
-        ],
-      };
-      // Send the email
-      await transporter.sendMail(mailOptions);
+      const emailData = { userName, client_email, invoiceDate, invoiceTitle, invoiceGenerated };
+
+      // Send the pdf invoice by email
+      await sendInvoiceEmail(emailData);
 
       // Send the response
       res.json({ reload: true, success: true });
