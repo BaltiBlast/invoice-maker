@@ -185,30 +185,23 @@ const invoiceFormInteraction = {
   },
 
   // ------------------------------------------------------------------------------------ //
-  // Show invoice preview
-  generatePDF: async () => {
-    const invoiceToSend = document.getElementById("invoiceToSend");
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+  // Get all services
+  getSelectedServices: () => {
+    const selectedServices = [];
 
-    return new Promise((resolve) => {
-      html2canvas(invoiceToSend, {
-        scale: 2,
-      }).then((canvas) => {
-        const imgData = canvas.toDataURL("image/webp", 1);
-        const pdfWidth = doc.internal.pageSize.getWidth();
+    document.querySelectorAll("tr[data-service-id]").forEach((row) => {
+      const quantityInput = row.querySelector("[data-service-quantity]");
+      const quantity = parseInt(quantityInput.value, 10);
 
-        const imgWidth = pdfWidth;
-        const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-
-        const xPos = (pdfWidth - imgWidth) / 2;
-        const yPos = 10;
-
-        doc.addImage(imgData, "WEBP", xPos, yPos, imgWidth, imgHeight);
-        const pdfBase64 = doc.output("datauristring");
-        resolve(pdfBase64);
-      });
+      if (quantity > 0) {
+        selectedServices.push({
+          serviceId: row.dataset.serviceId,
+          serviceQuantity: quantity,
+        });
+      }
     });
+
+    return selectedServices;
   },
 
   // ------------------------------------------------------------------------------------ //
@@ -217,37 +210,23 @@ const invoiceFormInteraction = {
     invoiceForm.addEventListener("submit", async function (event) {
       event.preventDefault();
 
-      const pdfInvoice = await generatePDF();
+      const { client_id } = selectedClient;
+      // const formatedDate = `${invoiceMonth.textContent} ${yearElement.textContent}`;
+      const date = invoiceMonth.textContent;
+      // const invoiceDbData = {
+      //   invoiceMonth: invoiceMonth.textContent,
+      //   invoiceYear: yearElement.textContent,
+      //   invoiceIncome: totalPrice.textContent,
+      //   invoiceClient: client_email,
+      //   invoiceClientId: client_id,
+      // };
 
-      const formData = new FormData(invoiceForm);
-      const formValues = Object.fromEntries(formData.entries());
-
-      const { userLastName, userFirstName, userEmail } = formValues;
-      const { client_email, client_id, client_total_payment, recordId } = selectedClient;
-
-      const newTotalPrice = (parseFloat(client_total_payment) + parseFloat(totalPrice.textContent)).toString();
-
-      const formatedDate = `${invoiceMonth.textContent} ${yearElement.textContent}`;
-
-      const fullNames = `${userFirstName} ${userLastName}`;
-
-      const invoiceDbData = {
-        invoiceMonth: invoiceMonth.textContent,
-        invoiceYear: yearElement.textContent,
-        invoiceIncome: totalPrice.textContent,
-        invoiceClient: client_email,
-        invoiceClientId: client_id,
-      };
+      const servicesData = getSelectedServices();
 
       const data = {
-        pdfInvoice: pdfInvoice,
-        clientEmail: client_email,
-        newTotalPrice: newTotalPrice.toString(),
-        recordId: recordId,
-        userName: fullNames,
-        userEmail: userEmail,
-        date: formatedDate,
-        invoiceDbData,
+        clientId: client_id,
+        invoiceMonth: date,
+        servicesData,
       };
 
       sendButton.classList.add("is-loading");
@@ -333,7 +312,6 @@ const {
   isMonthSelected,
   isClientSelected,
   isInvoiceNumberEmpty,
-  generatePDF,
   getClientDataById,
   switchTab,
   activateTab,
@@ -341,6 +319,7 @@ const {
   invoiceTabManagement,
   showInvoicePreview,
   closeInvoicePreview,
+  getSelectedServices,
 } = invoiceFormInteraction;
 
 document.addEventListener("DOMContentLoaded", invoiceFormInteraction.init());

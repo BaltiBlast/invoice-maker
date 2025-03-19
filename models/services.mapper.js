@@ -22,6 +22,22 @@ class ServicesMapper extends CoreMapper {
   }
 
   // ------------------------------------------------------------------------------------ //
+  // Mapper to get service by id
+  async getServiceById(serviceId) {
+    const records = await this.db(this.tableName)
+      .select({
+        filterByFormula: `{service_id} = '${serviceId}'`,
+      })
+      .all();
+
+    return records.map((record) => {
+      const { id: recordId, fields: servcices } = record;
+      const { ...servicesData } = servcices;
+      return { ...servicesData, recordId };
+    });
+  }
+
+  // ------------------------------------------------------------------------------------ //
   // Mapper to create a service
   async createService(data) {
     const { serviceName, servicePrice, userId } = data;

@@ -16,13 +16,12 @@
           <input
             class="margin-none"
             type="number"
-            name="services[<%= service.service_id %>][quantity]"
+            data-service-id="<%= service.service_id %>"
+            data-service-quantity
             value="0"
             min="0"
             required
           />
-          <input type="hidden" name="services[<%= service.service_id %>][name]" value="<%= service.service_name %>" />
-          <input type="hidden" name="services[<%= service.service_id %>][price]" value="<%= service.service_price %>" />
         </td>
       </tr>
       <% }) %> <% } %>

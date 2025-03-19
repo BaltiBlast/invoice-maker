@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@pdfme/common": "^5.3.13",
+    "@pdfme/generator": "^5.3.13",
     "airtable": "^0.12.2",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
