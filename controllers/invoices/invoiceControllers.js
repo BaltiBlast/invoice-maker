@@ -1,6 +1,6 @@
 // ===== IMPORTS ===== //
 // Models
-const { ClientsMapper, ServicesMapper, UserMapper } = require("../../models/index.mapper");
+const { ClientsMapper, ServicesMapper, UserMapper, InvoicesMapper } = require("../../models/index.mapper");
 
 // Utils
 const { months, userFullName } = require("../../utils/genericMethods");
@@ -12,6 +12,7 @@ const {
   formatingInvoiceClientData,
   invoicePdfGenerator,
   sendInvoiceEmail,
+  addInvoiceServicesToDatabase,
 } = require("./invoiceControllersMethods");
 
 // ===== CONTROLLERS ===== //
@@ -98,6 +99,19 @@ const invoiceControllers = {
 
       // Send the pdf invoice by email
       await sendInvoiceEmail(emailData);
+
+      const invoiceData = {
+        invoiceMonth: invoiceMonth,
+        invoiceYear: invoiceYear,
+        invoiceClientId: clientId,
+        userId: userData.user_id,
+      };
+
+      // Add the invoice to the database
+      const invoiceId = await InvoicesMapper.addInvoice(invoiceData);
+
+      // Add the invoice's services to the database
+      await addInvoiceServicesToDatabase(servicesData, invoiceId);
 
       // Send the response
       res.json({ reload: true, success: true });

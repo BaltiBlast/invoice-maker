@@ -192,10 +192,11 @@ const invoiceFormInteraction = {
     document.querySelectorAll("tr[data-service-id]").forEach((row) => {
       const quantityInput = row.querySelector("[data-service-quantity]");
       const quantity = parseInt(quantityInput.value, 10);
+      const serviceId = parseInt(row.dataset.serviceId);
 
       if (quantity > 0) {
         selectedServices.push({
-          serviceId: row.dataset.serviceId,
+          serviceId: serviceId,
           serviceQuantity: quantity,
         });
       }

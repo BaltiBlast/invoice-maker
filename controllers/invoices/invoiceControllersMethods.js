@@ -1,5 +1,5 @@
 // Mapper
-const { ServicesMapper } = require("../../models/index.mapper");
+const { ServicesMapper, InvoiceServicesMapper } = require("../../models/index.mapper");
 
 // PDF
 const { generate } = require("@pdfme/generator");
@@ -76,6 +76,16 @@ const invoiceControllersMethods = {
     };
     // Send the email
     await transporter.sendMail(mailOptions);
+  },
+
+  // ------------------------------------------------------------------------------------ //
+  // Return the invoice data for the database
+  addInvoiceServicesToDatabase: async (servicesData, invoiceId) => {
+    for (const service of servicesData) {
+      const { serviceId, serviceQuantity } = service;
+      const invoiceServicesData = { invoiceId, serviceId, serviceQuantity };
+      await InvoiceServicesMapper.createInvoiceServices(invoiceServicesData);
+    }
   },
 };
 
